@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resource Allocation | AVERTIQ</title>
+    <meta name="description" content="Monitor simulated emergency supplies and resource allocation across affected locations.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/allocation.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+<div class="app-shell">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div>
+                <h2>AVERTIQ</h2>
+                <span>Emergency Intelligence</span>
+            </div>
+        </div>
+
+        <div class="sidebar-label">WORKSPACE</div>
+
+        <nav class="sidebar-nav">
+            <a href="../pages/dashboard.html" class="nav-link">
+                <i class="fa-solid fa-border-all"></i><span>Command Center</span>
+            </a>
+            <a href="./disaster-map.html" class="nav-link">
+                <i class="fa-solid fa-map-location-dot"></i><span>Disaster Map</span>
+            </a>
+            <a href="./resource-allocation.html" class="nav-link active">
+                <i class="fa-solid fa-boxes-stacked"></i><span>Resource Allocation</span>
+            </a>
+            <a href="./rescue-operations.html" class="nav-link">
+                <i class="fa-solid fa-truck-medical"></i><span>Rescue Operations</span>
+            </a>
+            <a href="./analytics.html" class="nav-link">
+                <i class="fa-solid fa-chart-line"></i><span>Analytics</span>
+            </a>
+            <a href="./simulation.html" class="nav-link">
+                <i class="fa-solid fa-flask"></i><span>Simulation Lab</span>
+            </a>
+            <a href="./settings.html" class="nav-link">
+                <i class="fa-solid fa-gear"></i><span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>Simulation Environment</span>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <div>
+                    <div class="breadcrumb">Workspace / <strong>Resource Allocation</strong></div>
+                    <div class="page-date" id="currentDate"></div>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <span class="environment-badge">
+                    <i class="fa-solid fa-circle"></i> DEMO MODE
+                </span>
+            </div>
+        </header>
+
+        <section class="allocation-page">
+
+            <div class="allocation-heading">
+                <div>
+                    <span class="eyebrow">SUPPLY & DISTRIBUTION</span>
+                    <h1>Resource Allocation</h1>
+                    <p>Review available supplies, location requirements and potential resource gaps.</p>
+                </div>
+
+                <button type="button" class="primary-button" id="calculateAllocation">
+                    <i class="fa-solid fa-calculator"></i>
+                    Calculate Allocation
+                </button>
+            </div>
+
+            <div class="simulation-banner">
+                <i class="fa-solid fa-circle-info"></i>
+                <div>
+                    <strong>Simulated scenario</strong>
+                    <p>All resource figures are illustrative. Allocation results are decision-support examples, not live dispatch instructions.</p>
+                </div>
+            </div>
+
+            <div id="allocationMessage" class="allocation-message" role="status" aria-live="polite">
+                Loading scenario data...
+            </div>
+
+            <section class="allocation-kpis">
+                <article class="allocation-kpi">
+                    <div class="allocation-kpi-icon cyan"><i class="fa-solid fa-boxes-stacked"></i></div>
+                    <div class="allocation-kpi-label">Resource Categories</div>
+                    <div class="allocation-kpi-value" id="resourceCategoryCount">—</div>
+                    <div class="allocation-kpi-note">Types of supplies</div>
+                </article>
+
+                <article class="allocation-kpi">
+                    <div class="allocation-kpi-icon green"><i class="fa-solid fa-warehouse"></i></div>
+                    <div class="allocation-kpi-label">Relief Hubs</div>
+                    <div class="allocation-kpi-value" id="hubCount">—</div>
+                    <div class="allocation-kpi-note">Configured supply centers</div>
+                </article>
+
+                <article class="allocation-kpi">
+                    <div class="allocation-kpi-icon amber"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="allocation-kpi-label">Affected Locations</div>
+                    <div class="allocation-kpi-value" id="affectedLocationCount">—</div>
+                    <div class="allocation-kpi-note">Locations in scenario</div>
+                </article>
+
+                <article class="allocation-kpi">
+                    <div class="allocation-kpi-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <div class="allocation-kpi-label">Unserved Locations</div>
+                    <div class="allocation-kpi-value" id="unservedLocationCount">—</div>
+                    <div class="allocation-kpi-note">Awaiting allocation calculation</div>
+                </article>
+            </section>
+
+            <section class="allocation-section">
+                <div class="section-heading">
+                    <div>
+                        <h2><i class="fa-solid fa-warehouse"></i> Hub Inventory</h2>
+                        <p>Available resources at each simulated relief hub.</p>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="allocation-table">
+                        <thead>
+                            <tr>
+                                <th>Relief Hub</th>
+                                <th>Capacity</th>
+                                <th>Food Kits</th>
+                                <th>Water (L)</th>
+                                <th>Medical Kits</th>
+                                <th>Rescue Boats</th>
+                                <th>Shelter Units</th>
+                            </tr>
+                        </thead>
+                        <tbody id="hubInventoryBody">
+                            <tr><td colspan="7">Loading inventory...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="allocation-section">
+                <div class="section-heading">
+                    <div>
+                        <h2><i class="fa-solid fa-ranking-star"></i> Location Priorities</h2>
+                        <p>Priority scores use the scenario's configured weights and normalized inputs.</p>
+                    </div>
+                    <span class="allocation-tag">Illustrative scoring</span>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="allocation-table">
+                        <thead>
+                            <tr>
+                                <th>Location</th>
+                                <th>Severity</th>
+                                <th>Urgency</th>
+                                <th>Affected People</th>
+                                <th>Vulnerable People</th>
+                                <th>Priority Score</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="locationPriorityBody">
+                            <tr><td colspan="7">Loading priorities...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="allocation-section">
+                <div class="section-heading">
+                    <div>
+                        <h2><i class="fa-solid fa-truck-ramp-box"></i> Allocation Results</h2>
+                        <p>Resource assignments and remaining unmet demand.</p>
+                    </div>
+                </div>
+
+                <div id="allocationResults" class="allocation-results">
+                    <div class="allocation-empty">
+                        <i class="fa-solid fa-calculator"></i>
+                        <p>Click “Calculate Allocation” to generate an illustrative allocation plan.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="allocation-section">
+                <div class="section-heading">
+                    <div>
+                        <h2><i class="fa-solid fa-chart-column"></i> Resource Demand Overview</h2>
+                        <p>Compare total available inventory against total requested quantities by resource type.</p>
+                    </div>
+                </div>
+                <div class="allocation-chart-container">
+                    <canvas id="allocationChart" aria-label="Available resources compared with total demand"></canvas>
+                </div>
+            </section>
+
+        </section>
+    </main>
+</div>
+
+<script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/allocation.js"></script>
+</body>
+</html>

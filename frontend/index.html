@@ -1,0 +1,1524 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="AVERTIQ is a disaster response intelligence platform for disaster impact analysis, resource allocation and rescue optimisation."
+    >
+
+    <meta name="theme-color" content="#0b1220">
+
+    <title>AVERTIQ | Disaster Response Intelligence</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- Responsive Stylesheet -->
+    <link rel="stylesheet" href="./css/responsive.css">
+
+    <!-- Landing Page Styles -->
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg-light: #101b2d;
+            --card: #111e31;
+            --border: rgba(148, 163, 184, 0.17);
+            --text: #f8fafc;
+            --muted: #9baac0;
+            --green: #36d399;
+            --green-dark: #16a875;
+            --blue: #60a5fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(11, 18, 32, 0.92);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            min-height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            background: rgba(54, 211, 153, 0.12);
+            border: 1px solid rgba(54, 211, 153, 0.3);
+            color: var(--green);
+            font-size: 21px;
+        }
+
+        .brand-name {
+            display: block;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+        }
+
+        .brand-caption {
+            display: block;
+            font-size: 9px;
+            color: var(--muted);
+            letter-spacing: 1.6px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links > a:not(.nav-cta) {
+            color: #c0cada;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links > a:not(.nav-cta):hover {
+            color: var(--green);
+        }
+
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 11px 17px;
+            border-radius: 9px;
+            background: var(--green);
+            color: #062117;
+            font-size: 12px;
+            font-weight: 800;
+            transition: 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            background: #69e7b5;
+            transform: translateY(-1px);
+        }
+
+        /* HERO */
+
+        .hero {
+            position: relative;
+            padding: 100px 0 95px;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    ellipse at 80% 30%,
+                    rgba(22, 168, 117, 0.13),
+                    transparent 42%
+                ),
+                radial-gradient(
+                    ellipse at 15% 15%,
+                    rgba(59, 130, 246, 0.08),
+                    transparent 35%
+                );
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: center;
+            gap: 65px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--green);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .eyebrow-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 15px rgba(54, 211, 153, 0.7);
+        }
+
+        .hero h1 {
+            max-width: 700px;
+            font-size: clamp(38px, 5vw, 66px);
+            line-height: 1.12;
+            letter-spacing: -2.5px;
+            font-weight: 800;
+        }
+
+        .hero h1 .highlight {
+            color: var(--green);
+        }
+
+        .hero-description {
+            max-width: 570px;
+            margin-top: 25px;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 34px;
+        }
+
+        .btn {
+            min-height: 49px;
+            padding: 0 20px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 11px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: #062117;
+            border: 1px solid var(--green);
+        }
+
+        .btn-primary:hover {
+            background: #69e7b5;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(54, 211, 153, 0.12);
+        }
+
+        .btn-secondary {
+            color: var(--text);
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--green);
+            color: var(--green);
+            transform: translateY(-2px);
+        }
+
+        .hero-note {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 25px;
+            color: #8191a8;
+            font-size: 11px;
+        }
+
+        .hero-note i {
+            color: var(--green);
+        }
+
+        /* HERO VISUAL */
+
+        .visual-wrapper {
+            position: relative;
+            min-width: 0;
+        }
+
+        .visual-glow {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: rgba(54, 211, 153, 0.13);
+            filter: blur(90px);
+            border-radius: 50%;
+            top: 20%;
+            left: 25%;
+            pointer-events: none;
+        }
+
+        .preview-card {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            border-radius: 20px;
+            background: linear-gradient(
+                145deg,
+                rgba(20, 35, 55, 0.98),
+                rgba(13, 25, 42, 0.98)
+            );
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.25);
+        }
+
+        .preview-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding-bottom: 17px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .preview-heading {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .preview-subheading {
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .demo-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px 9px;
+            border-radius: 6px;
+            color: #fbbf24;
+            background: rgba(251, 191, 36, 0.1);
+            font-size: 9px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .demo-pill span {
+            width: 6px;
+            height: 6px;
+            background: #fbbf24;
+            border-radius: 50%;
+        }
+
+        .preview-map {
+            position: relative;
+            height: 245px;
+            margin-top: 17px;
+            border-radius: 13px;
+            overflow: hidden;
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            background-color: #13253a;
+            background-image:
+                linear-gradient(
+                    35deg,
+                    transparent 45%,
+                    rgba(54, 211, 153, 0.08) 46%,
+                    rgba(54, 211, 153, 0.08) 47%,
+                    transparent 48%
+                ),
+                linear-gradient(
+                    120deg,
+                    transparent 35%,
+                    rgba(96, 165, 250, 0.08) 36%,
+                    rgba(96, 165, 250, 0.08) 37%,
+                    transparent 38%
+                ),
+                linear-gradient(
+                    rgba(148, 163, 184, 0.06) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(148, 163, 184, 0.06) 1px,
+                    transparent 1px
+                );
+            background-size:
+                100% 100%,
+                100% 100%,
+                28px 28px,
+                28px 28px;
+        }
+
+        .map-route {
+            position: absolute;
+            height: 3px;
+            background: rgba(54, 211, 153, 0.6);
+            transform-origin: left center;
+            border-radius: 5px;
+        }
+
+        .route-one {
+            width: 62%;
+            left: 13%;
+            top: 32%;
+            transform: rotate(27deg);
+        }
+
+        .route-two {
+            width: 55%;
+            left: 30%;
+            top: 70%;
+            transform: rotate(-34deg);
+        }
+
+        .route-three {
+            width: 46%;
+            left: 15%;
+            top: 76%;
+            transform: rotate(-15deg);
+            background: rgba(96, 165, 250, 0.65);
+        }
+
+        .map-marker {
+            position: absolute;
+            width: 27px;
+            height: 27px;
+            display: grid;
+            place-items: center;
+            border: 2px solid #e2e8f0;
+            border-radius: 50%;
+            font-size: 10px;
+            color: white;
+            box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.06);
+        }
+
+        .marker-critical {
+            top: 24%;
+            left: 20%;
+            background: #ef4444;
+        }
+
+        .marker-high {
+            top: 48%;
+            left: 60%;
+            background: #f59e0b;
+        }
+
+        .marker-moderate {
+            top: 68%;
+            left: 32%;
+            background: #3b82f6;
+        }
+
+        .marker-hub {
+            top: 23%;
+            right: 17%;
+            background: var(--green-dark);
+        }
+
+        .map-label {
+            position: absolute;
+            padding: 5px 8px;
+            border-radius: 5px;
+            background: rgba(7, 15, 28, 0.9);
+            border: 1px solid var(--border);
+            color: #dbe5f2;
+            font-size: 9px;
+            white-space: nowrap;
+        }
+
+        .label-one {
+            top: 39%;
+            left: 13%;
+        }
+
+        .label-two {
+            top: 57%;
+            left: 55%;
+        }
+
+        .label-three {
+            top: 80%;
+            left: 27%;
+        }
+
+        .preview-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 13px;
+        }
+
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .legend-color {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+
+        .preview-bottom {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .mini-stat {
+            padding: 13px 10px;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            min-width: 0;
+        }
+
+        .mini-stat-label {
+            color: var(--muted);
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+        .mini-stat-value {
+            margin-top: 5px;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .mini-stat-value.red {
+            color: #fb7185;
+        }
+
+        .mini-stat-value.green {
+            color: var(--green);
+        }
+
+        .mini-stat-value.blue {
+            color: var(--blue);
+        }
+
+        /* GENERAL SECTIONS */
+
+        .section {
+            padding: 90px 0;
+        }
+
+        .section-muted {
+            background: rgba(255, 255, 255, 0.018);
+            border-top: 1px solid rgba(148, 163, 184, 0.08);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+        }
+
+        .section-heading {
+            max-width: 690px;
+            margin: 0 auto 45px;
+            text-align: center;
+        }
+
+        .section-kicker {
+            color: var(--green);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .section-heading h2 {
+            margin-top: 13px;
+            font-size: clamp(28px, 4vw, 40px);
+            line-height: 1.2;
+            letter-spacing: -1.2px;
+        }
+
+        .section-heading p {
+            margin-top: 15px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* FEATURES */
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .feature-card {
+            min-width: 0;
+            padding: 25px 22px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(54, 211, 153, 0.45);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            color: var(--green);
+            background: rgba(54, 211, 153, 0.1);
+            font-size: 20px;
+        }
+
+        .feature-card h3 {
+            margin-top: 22px;
+            font-size: 15px;
+        }
+
+        .feature-card p {
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.9;
+        }
+
+        /* WORKFLOW */
+
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .workflow-step {
+            position: relative;
+            padding: 25px 20px;
+            border-left: 2px solid rgba(54, 211, 153, 0.4);
+            background: linear-gradient(
+                90deg,
+                rgba(54, 211, 153, 0.045),
+                transparent
+            );
+        }
+
+        .step-number {
+            color: var(--green);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+        }
+
+        .workflow-step h3 {
+            margin-top: 15px;
+            font-size: 16px;
+        }
+
+        .workflow-step p {
+            margin-top: 9px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        /* CTA */
+
+        .cta-section {
+            padding: 75px 0;
+        }
+
+        .cta-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            padding: 45px;
+            border: 1px solid rgba(54, 211, 153, 0.25);
+            border-radius: 20px;
+            background:
+                radial-gradient(
+                    ellipse at 90% 50%,
+                    rgba(54, 211, 153, 0.12),
+                    transparent 50%
+                ),
+                var(--card);
+        }
+
+        .cta-copy {
+            max-width: 620px;
+        }
+
+        .cta-copy h2 {
+            font-size: clamp(25px, 3vw, 34px);
+            line-height: 1.3;
+        }
+
+        .cta-copy p {
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .cta-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        /* DISCLAIMER */
+
+        .disclaimer {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            margin-top: 28px;
+            padding: 17px 20px;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            background: rgba(251, 191, 36, 0.045);
+            border-radius: 11px;
+        }
+
+        .disclaimer > i {
+            color: #fbbf24;
+            margin-top: 3px;
+        }
+
+        .disclaimer p {
+            color: #aab6c7;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .disclaimer strong {
+            color: #e2e8f0;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            padding: 28px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .footer-brand strong {
+            font-size: 15px;
+            letter-spacing: 1.5px;
+        }
+
+        .footer-brand span,
+        .footer-copy {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .footer-links a:hover {
+            color: var(--green);
+        }
+
+        /* TABLET */
+
+        @media (max-width: 1000px) {
+            .hero-grid {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 45px;
+            }
+
+            .hero-copy {
+                max-width: 720px;
+            }
+
+            .visual-wrapper {
+                width: 100%;
+                max-width: 650px;
+                margin: 0 auto;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .workflow-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .cta-box {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                gap: 18px;
+            }
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+            .container {
+                width: calc(100% - 30px);
+            }
+
+            .nav-inner {
+                min-height: 70px;
+                gap: 10px;
+            }
+
+            .brand-icon {
+                width: 39px;
+                height: 39px;
+                font-size: 18px;
+            }
+
+            .brand-name {
+                font-size: 17px;
+            }
+
+            .brand-caption {
+                font-size: 8px;
+                letter-spacing: 1px;
+            }
+
+            .nav-links {
+                gap: 0;
+            }
+
+            .nav-links > a:not(.nav-cta) {
+                display: none;
+            }
+
+            .nav-cta {
+                padding: 10px 12px;
+                font-size: 10px;
+            }
+
+            .hero {
+                padding: 65px 0 55px;
+            }
+
+            .hero-grid {
+                gap: 35px;
+            }
+
+            .hero h1 {
+                font-size: clamp(35px, 9vw, 49px);
+                letter-spacing: -1.6px;
+            }
+
+            .hero-description {
+                font-size: 13px;
+                margin-top: 18px;
+            }
+
+            .hero-actions {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+            }
+
+            .hero-note {
+                align-items: flex-start;
+                line-height: 1.8;
+            }
+
+            .preview-card {
+                padding: 13px;
+                border-radius: 15px;
+            }
+
+            .preview-map {
+                height: 220px;
+            }
+
+            .preview-legend {
+                gap: 10px;
+            }
+
+            .legend-item {
+                font-size: 8px;
+            }
+
+            .preview-bottom {
+                gap: 7px;
+            }
+
+            .mini-stat {
+                padding: 10px 7px;
+            }
+
+            .mini-stat-label {
+                font-size: 8px;
+            }
+
+            .mini-stat-value {
+                font-size: 17px;
+            }
+
+            .section {
+                padding: 65px 0;
+            }
+
+            .section-heading {
+                margin-bottom: 30px;
+            }
+
+            .section-heading h2 {
+                font-size: 29px;
+            }
+
+            .features-grid {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 13px;
+            }
+
+            .feature-card {
+                padding: 21px;
+            }
+
+            .feature-card h3 {
+                margin-top: 15px;
+            }
+
+            .workflow-grid {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 12px;
+            }
+
+            .workflow-step {
+                padding: 20px;
+            }
+
+            .cta-section {
+                padding: 45px 0;
+            }
+
+            .cta-box {
+                padding: 25px 20px;
+                gap: 23px;
+            }
+
+            .cta-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .cta-actions .btn {
+                width: 100%;
+            }
+
+            .disclaimer {
+                padding: 14px;
+            }
+
+            .footer-inner {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .footer-links {
+                gap: 15px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="container nav-inner">
+
+            <a href="./index.html" class="brand" aria-label="AVERTIQ Home">
+                <span class="brand-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </span>
+
+                <span>
+                    <span class="brand-name">AVERTIQ</span>
+                    <span class="brand-caption">RESPONSE INTELLIGENCE</span>
+                </span>
+            </a>
+
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="#home">Home</a>
+                <a href="#features">Features</a>
+                <a href="#workflow">How It Works</a>
+                <a href="#about">About</a>
+
+                <!-- DIRECT LINK TO DASHBOARD -->
+                <a href="./pages/dashboard.html" class="nav-cta">
+                    Launch Dashboard
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </nav>
+
+        </div>
+    </header>
+
+    <main>
+
+        <!-- HERO SECTION -->
+        <section class="hero" id="home">
+            <div class="container hero-grid">
+
+                <div class="hero-copy">
+
+                    <div class="eyebrow">
+                        <span class="eyebrow-dot"></span>
+                        DISASTER RESPONSE INTELLIGENCE
+                    </div>
+
+                    <h1>
+                        Every Second Matters.
+                        <span class="highlight">
+                            Every Decision Counts.
+                        </span>
+                    </h1>
+
+                    <p class="hero-description">
+                        AVERTIQ is a disaster response decision-support
+                        platform designed to help analyse affected areas,
+                        assess resource requirements, identify accessibility
+                        challenges and explore data-driven rescue strategies.
+                    </p>
+
+                    <div class="hero-actions">
+
+                        <!-- DIRECT DASHBOARD NAVIGATION -->
+                        <a
+                            href="./pages/dashboard.html"
+                            class="btn btn-primary"
+                        >
+                            <i class="fa-solid fa-chart-pie"></i>
+                            Explore Command Center
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                        <a href="#features" class="btn btn-secondary">
+                            <i class="fa-solid fa-compass"></i>
+                            Explore Features
+                        </a>
+
+                    </div>
+
+                    <div class="hero-note">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>
+                            Prototype platform using simulated disaster
+                            scenario data.
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- VISUAL DEMONSTRATION -->
+                <div class="visual-wrapper" aria-label="Illustrative disaster map preview">
+
+                    <div class="visual-glow"></div>
+
+                    <div class="preview-card">
+
+                        <div class="preview-top">
+                            <div>
+                                <div class="preview-heading">
+                                    Situation Overview
+                                </div>
+
+                                <div class="preview-subheading">
+                                    Illustrative response scenario
+                                </div>
+                            </div>
+
+                            <span class="demo-pill">
+                                <span></span>
+                                DEMO MODE
+                            </span>
+                        </div>
+
+                        <!-- Decorative preview, not a live map -->
+                        <div
+                            class="preview-map"
+                            role="img"
+                            aria-label="Illustrative map showing simulated incident locations and a resource hub"
+                        >
+
+                            <div class="map-route route-one"></div>
+                            <div class="map-route route-two"></div>
+                            <div class="map-route route-three"></div>
+
+                            <div class="map-marker marker-critical">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+
+                            <div class="map-marker marker-high">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+
+                            <div class="map-marker marker-moderate">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+
+                            <div class="map-marker marker-hub">
+                                <i class="fa-solid fa-boxes-stacked"></i>
+                            </div>
+
+                            <span class="map-label label-one">
+                                Priority Area
+                            </span>
+
+                            <span class="map-label label-two">
+                                Affected Zone
+                            </span>
+
+                            <span class="map-label label-three">
+                                Response Route
+                            </span>
+
+                        </div>
+
+                        <div class="preview-legend">
+                            <span class="legend-item">
+                                <span
+                                    class="legend-color"
+                                    style="background:#ef4444"
+                                ></span>
+                                Critical
+                            </span>
+
+                            <span class="legend-item">
+                                <span
+                                    class="legend-color"
+                                    style="background:#f59e0b"
+                                ></span>
+                                High
+                            </span>
+
+                            <span class="legend-item">
+                                <span
+                                    class="legend-color"
+                                    style="background:#3b82f6"
+                                ></span>
+                                Moderate
+                            </span>
+
+                            <span class="legend-item">
+                                <span
+                                    class="legend-color"
+                                    style="background:#36d399"
+                                ></span>
+                                Resource Hub
+                            </span>
+                        </div>
+
+                        <div class="preview-bottom">
+
+                            <div class="mini-stat">
+                                <div class="mini-stat-label">
+                                    Impact Assessment
+                                </div>
+                                <div class="mini-stat-value blue">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                </div>
+                            </div>
+
+                            <div class="mini-stat">
+                                <div class="mini-stat-label">
+                                    Priority Analysis
+                                </div>
+                                <div class="mini-stat-value red">
+                                    <i class="fa-solid fa-bullseye"></i>
+                                </div>
+                            </div>
+
+                            <div class="mini-stat">
+                                <div class="mini-stat-label">
+                                    Resource Planning
+                                </div>
+                                <div class="mini-stat-value green">
+                                    <i class="fa-solid fa-boxes-stacked"></i>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FEATURES -->
+        <section class="section section-muted" id="features">
+
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-kicker">
+                        PLATFORM CAPABILITIES
+                    </span>
+
+                    <h2>
+                        Intelligence for Better Response Planning
+                    </h2>
+
+                    <p>
+                        Explore the capabilities designed to support
+                        structured disaster assessment and response planning.
+                    </p>
+                </div>
+
+                <div class="features-grid">
+
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+
+                        <h3>Disaster Mapping</h3>
+
+                        <p>
+                            Visualise simulated incident locations, affected
+                            zones, resource hubs and road accessibility
+                            through a geographic overview.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </div>
+
+                        <h3>Resource Allocation</h3>
+
+                        <p>
+                            Compare illustrative resource requirements and
+                            availability to identify potential gaps in
+                            supplies and response capacity.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-truck-medical"></i>
+                        </div>
+
+                        <h3>Rescue Operations</h3>
+
+                        <p>
+                            Review simulated accessibility conditions,
+                            priority locations and possible response
+                            coordination requirements.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-flask"></i>
+                        </div>
+
+                        <h3>Scenario Simulation</h3>
+
+                        <p>
+                            Explore hypothetical disaster scenarios and
+                            examine how changes in conditions may affect
+                            response planning.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="section" id="workflow">
+
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-kicker">
+                        OUR APPROACH
+                    </span>
+
+                    <h2>From Scenario to Response Strategy</h2>
+
+                    <p>
+                        AVERTIQ organises scenario information into a
+                        structured workflow for analysis and review.
+                    </p>
+                </div>
+
+                <div class="workflow-grid">
+
+                    <article class="workflow-step">
+                        <span class="step-number">STEP 01</span>
+
+                        <h3>Assess</h3>
+
+                        <p>
+                            Examine affected locations and the available
+                            scenario information.
+                        </p>
+                    </article>
+
+                    <article class="workflow-step">
+                        <span class="step-number">STEP 02</span>
+
+                        <h3>Analyse</h3>
+
+                        <p>
+                            Review illustrative impact indicators and
+                            location priority scores.
+                        </p>
+                    </article>
+
+                    <article class="workflow-step">
+                        <span class="step-number">STEP 03</span>
+
+                        <h3>Optimise</h3>
+
+                        <p>
+                            Compare resource requirements and explore
+                            alternative allocation scenarios.
+                        </p>
+                    </article>
+
+                    <article class="workflow-step">
+                        <span class="step-number">STEP 04</span>
+
+                        <h3>Plan</h3>
+
+                        <p>
+                            Review potential actions and accessibility
+                            considerations for human assessment.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section class="section section-muted" id="about">
+
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-kicker">
+                        ABOUT AVERTIQ
+                    </span>
+
+                    <h2>
+                        A Structured Approach to Disaster Intelligence
+                    </h2>
+
+                    <p>
+                        AVERTIQ explores how geographic information,
+                        resource analysis and explainable decision-support
+                        techniques can help organise disaster response
+                        planning in a unified interface.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- DASHBOARD CTA -->
+        <section class="cta-section">
+
+            <div class="container">
+
+                <div class="cta-box">
+
+                    <div class="cta-copy">
+                        <h2>
+                            Ready to Explore the Command Center?
+                        </h2>
+
+                        <p>
+                            Open the AVERTIQ dashboard to explore the
+                            scenario map, priority locations, resource
+                            distribution and response recommendations.
+                        </p>
+                    </div>
+
+                    <div class="cta-actions">
+
+                        <!-- DIRECT LINK TO DASHBOARD -->
+                        <a
+                            href="./pages/dashboard.html"
+                            class="btn btn-primary"
+                        >
+                            <i class="fa-solid fa-chart-pie"></i>
+                            Launch Dashboard
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="disclaimer">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    <p>
+                        <strong>Demonstration notice:</strong>
+                        This prototype uses simulated data and illustrative
+                        rules. Its maps, metrics and recommendations are not
+                        verified real-time emergency information and must
+                        not be used as operational emergency instructions.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        <div class="container footer-inner">
+
+            <div class="footer-brand">
+                <strong>AVERTIQ</strong>
+
+                <span>
+                    Anticipate Risk. Optimise Rescue.
+                </span>
+            </div>
+
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="#home">Home</a>
+                <a href="#features">Features</a>
+                <a href="#workflow">How It Works</a>
+
+                <a href="./pages/dashboard.html">
+                    Command Center
+                </a>
+            </nav>
+
+            <p class="footer-copy">
+                &copy; <span id="currentYear">2026</span> AVERTIQ.
+                Demonstration prototype.
+            </p>
+
+        </div>
+
+    </footer>
+
+    <!-- Small page enhancement -->
+    <script>
+        const yearElement = document.getElementById("currentYear");
+
+        if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
+        }
+    </script>
+
+</body>
+</html>

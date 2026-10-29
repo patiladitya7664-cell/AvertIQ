@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Disaster Map | AVERTIQ</title>
+    <meta
+      name="description"
+      content="Explore simulated disaster locations, relief hubs, severity levels and blocked roads in AVERTIQ."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/map.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+
+    <style>
+      .map-page {
+        padding: 24px;
+      }
+
+      .map-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        margin: 22px 0;
+      }
+
+      .map-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .map-filter {
+        padding: 9px 14px;
+        border: 1px solid #dbe4e8;
+        border-radius: 9px;
+        background: #fff;
+        color: #334155;
+        font: inherit;
+        font-size: 13px;
+        cursor: pointer;
+      }
+
+      .map-filter.active {
+        background: #0f766e;
+        color: white;
+        border-color: #0f766e;
+      }
+
+      .map-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 310px;
+        gap: 18px;
+      }
+
+      .map-panel,
+      .location-panel {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+
+      .map-panel-header,
+      .location-panel-header {
+        padding: 17px 20px;
+        border-bottom: 1px solid #edf2f7;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .map-panel-header h2,
+      .location-panel-header h2 {
+        margin: 0;
+        font-size: 15px;
+      }
+
+      #disasterMap {
+        width: 100%;
+        height: 550px;
+        background: #e2e8f0;
+        z-index: 1;
+      }
+
+      .map-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        padding: 14px 18px;
+        font-size: 12px;
+        color: #475569;
+        border-top: 1px solid #edf2f7;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .legend-line {
+        width: 19px;
+        height: 4px;
+        border-radius: 3px;
+        display: inline-block;
+      }
+
+      .location-list {
+        max-height: 455px;
+        overflow-y: auto;
+        padding: 10px;
+      }
+
+      .location-item {
+        width: 100%;
+        display: block;
+        text-align: left;
+        border: 1px solid transparent;
+        background: white;
+        padding: 13px;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-bottom: 7px;
+        font: inherit;
+      }
+
+      .location-item:hover,
+      .location-item.selected {
+        background: #f0fdfa;
+        border-color: #99f6e4;
+      }
+
+      .location-item-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        align-items: flex-start;
+      }
+
+      .location-name {
+        font-size: 13px;
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .location-meta {
+        margin-top: 7px;
+        color: #64748b;
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      .severity-badge {
+        font-size: 10px;
+        font-weight: 800;
+        padding: 4px 7px;
+        border-radius: 5px;
+        text-transform: uppercase;
+      }
+
+      .severity-critical {
+        color: #b91c1c;
+        background: #fee2e2;
+      }
+
+      .severity-high {
+        color: #c2410c;
+        background: #ffedd5;
+      }
+
+      .severity-medium {
+        color: #a16207;
+        background: #fef3c7;
+      }
+
+      .severity-low {
+        color: #15803d;
+        background: #dcfce7;
+      }
+
+      .location-details {
+        padding: 18px;
+        border-top: 1px solid #edf2f7;
+        background: #f8fafc;
+      }
+
+      .location-details h3 {
+        font-size: 14px;
+        margin: 0 0 12px;
+      }
+
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 8px 0;
+        border-bottom: 1px solid #e2e8f0;
+        font-size: 12px;
+      }
+
+      .detail-row span:first-child {
+        color: #64748b;
+      }
+
+      .detail-row span:last-child {
+        font-weight: 700;
+        color: #0f172a;
+        text-align: right;
+      }
+
+      .map-status {
+        color: #64748b;
+        font-size: 12px;
+      }
+
+      .map-error {
+        padding: 20px;
+        margin: 15px;
+        background: #fff1f2;
+        color: #be123c;
+        border-radius: 10px;
+        font-size: 13px;
+      }
+
+      .hub-marker {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0f766e;
+        color: white;
+        border: 2px solid white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px #0003;
+      }
+
+      @media (max-width: 1050px) {
+        .map-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .location-list {
+          max-height: 300px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .map-page {
+          padding: 14px;
+        }
+
+        #disasterMap {
+          height: 380px;
+        }
+
+        .map-toolbar {
+          align-items: stretch;
+        }
+
+        .map-filters {
+          width: 100%;
+        }
+
+        .map-filter {
+          flex: 1;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <h2>AVERTIQ</h2>
+            <span>Emergency Intelligence</span>
+          </div>
+        </div>
+
+        <div class="sidebar-label">WORKSPACE</div>
+
+        <nav class="sidebar-nav">
+          <a href="../pages/dashboard.html" class="nav-link">
+            <i class="fa-solid fa-border-all"></i>
+            <span>Command Center</span>
+          </a>
+
+          <a href="./disaster-map.html" class="nav-link active">
+            <i class="fa-solid fa-map-location-dot"></i>
+            <span>Disaster Map</span>
+          </a>
+
+          <a href="./resource-allocation.html" class="nav-link">
+            <i class="fa-solid fa-boxes-stacked"></i>
+            <span>Resource Allocation</span>
+          </a>
+
+          <a href="./rescue-operations.html" class="nav-link">
+            <i class="fa-solid fa-truck-medical"></i>
+            <span>Rescue Operations</span>
+          </a>
+
+          <a href="./analytics.html" class="nav-link">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Analytics</span>
+          </a>
+
+          <a href="./simulation.html" class="nav-link">
+            <i class="fa-solid fa-flask"></i>
+            <span>Simulation Lab</span>
+          </a>
+
+          <a href="./settings.html" class="nav-link">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Simulation Environment</span>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="topbar-left">
+            <div>
+              <div class="breadcrumb">
+                Workspace / <strong>Disaster Map</strong>
+              </div>
+              <div class="map-status" id="currentDate"></div>
+            </div>
+          </div>
+
+          <div class="topbar-right">
+            <span class="environment-badge">
+              <i class="fa-solid fa-circle"></i>
+              DEMO MODE
+            </span>
+          </div>
+        </header>
+
+        <section class="map-page">
+          <div class="page-heading">
+            <div>
+              <span class="eyebrow">GEOSPATIAL INTELLIGENCE</span>
+              <h1>Disaster Map</h1>
+              <p>
+                Explore affected locations, relief hubs and simulated road
+                disruptions.
+              </p>
+            </div>
+          </div>
+
+          <div class="map-toolbar">
+            <div
+              class="map-filters"
+              role="group"
+              aria-label="Filter map locations"
+            >
+              <button type="button" class="map-filter active" data-filter="all">
+                All Locations
+              </button>
+              <button type="button" class="map-filter" data-filter="Critical">
+                Critical
+              </button>
+              <button type="button" class="map-filter" data-filter="High">
+                High
+              </button>
+              <button type="button" class="map-filter" data-filter="Medium">
+                Medium
+              </button>
+              <button type="button" class="map-filter" data-filter="Low">
+                Low
+              </button>
+            </div>
+
+            <span class="map-status" id="mapStatus" aria-live="polite">
+              Loading simulated scenario...
+            </span>
+          </div>
+
+          <div class="map-layout">
+            <section class="map-panel">
+              <div class="map-panel-header">
+                <h2><i class="fa-solid fa-map"></i> Geographic Overview</h2>
+                <span class="map-status">Illustrative coordinates</span>
+              </div>
+
+              <div id="disasterMap" aria-label="Interactive disaster map"></div>
+
+              <div class="map-legend">
+                <span class="legend-item">
+                  <span class="legend-dot" style="background: #dc2626"></span>
+                  Critical
+                </span>
+                <span class="legend-item">
+                  <span class="legend-dot" style="background: #f97316"></span>
+                  High
+                </span>
+                <span class="legend-item">
+                  <span class="legend-dot" style="background: #eab308"></span>
+                  Medium
+                </span>
+                <span class="legend-item">
+                  <span class="legend-dot" style="background: #22c55e"></span>
+                  Low
+                </span>
+                <span class="legend-item">
+                  <span class="legend-dot" style="background: #0f766e"></span>
+                  Relief Hub
+                </span>
+                <span class="legend-item">
+                  <span class="legend-line" style="background: #dc2626"></span>
+                  Blocked Connection
+                </span>
+                <span class="legend-item">
+                  <span class="legend-line" style="background: #94a3b8"></span>
+                  Simulated Connection
+                </span>
+              </div>
+            </section>
+
+            <aside class="location-panel">
+              <div class="location-panel-header">
+                <h2>
+                  <i class="fa-solid fa-location-dot"></i> Affected Locations
+                </h2>
+                <span id="locationCount" class="map-status">0</span>
+              </div>
+
+              <div id="locationList" class="location-list">
+                <p class="map-status">Loading locations...</p>
+              </div>
+
+              <div
+                class="location-details"
+                id="locationDetails"
+                aria-live="polite"
+              >
+                <h3>Location Details</h3>
+                <p class="map-status">Select a location to view its details.</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../js/utils.js"></script>
+
+    <script>
+      "use strict";
+
+      document.addEventListener("DOMContentLoaded", initDisasterMap);
+
+      let disasterMap;
+      let scenarioData;
+      let locationMarkers = [];
+      let roadLayers = [];
+      let hubMarkers = [];
+      let selectedLocationId = null;
+      let activeFilter = "all";
+
+      const severityColors = {
+        Critical: "#dc2626",
+        High: "#f97316",
+        Medium: "#eab308",
+        Low: "#22c55e",
+      };
+
+      async function initDisasterMap() {
+        const mapElement = document.getElementById("disasterMap");
+
+        if (!window.L) {
+          mapElement.innerHTML =
+            '<div class="map-error">Leaflet could not load. Check your internet connection and refresh the page.</div>';
+          return;
+        }
+
+        disasterMap = L.map("disasterMap").setView([21.1458, 79.0882], 11);
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 19,
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(disasterMap);
+
+        try {
+          const response = await fetch("../assets/data/disaster-scenario.json");
+
+          if (!response.ok) {
+            throw new Error("Scenario JSON could not be loaded.");
+          }
+
+          scenarioData = await response.json();
+
+          if (
+            !Array.isArray(scenarioData.locations) ||
+            !Array.isArray(scenarioData.hubs) ||
+            !Array.isArray(scenarioData.roads)
+          ) {
+            throw new Error(
+              "Scenario data is missing locations, hubs or roads.",
+            );
+          }
+
+          renderRoads();
+          renderHubs();
+          renderLocations();
+          setupFilters();
+          fitMapToScenario();
+
+          document.getElementById("mapStatus").textContent =
+            "Scenario loaded · Simulated data";
+        } catch (error) {
+          console.error("AVERTIQ map error:", error);
+
+          document.getElementById("mapStatus").textContent =
+            "Scenario unavailable";
+
+          document.getElementById("locationList").innerHTML =
+            '<div class="map-error">Could not load the scenario data. Open this page through Live Server and check that <code>assets/data/disaster-scenario.json</code> exists.</div>';
+        }
+
+        const dateElement = document.getElementById("currentDate");
+
+        if (dateElement) {
+          dateElement.textContent = new Date().toLocaleDateString("en-IN", {
+            weekday: "short",
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          });
+        }
+
+        setTimeout(() => disasterMap.invalidateSize(), 250);
+      }
+
+      function renderRoads() {
+        roadLayers.forEach((layer) => disasterMap.removeLayer(layer));
+        roadLayers = [];
+
+        const locationLookup = new Map(
+          scenarioData.locations.map((location) => [
+            String(location.id),
+            location,
+          ]),
+        );
+
+        const hubLookup = new Map(
+          scenarioData.hubs.map((hub) => [String(hub.id), hub]),
+        );
+
+        function getNode(id) {
+          return locationLookup.get(String(id)) || hubLookup.get(String(id));
+        }
+
+        scenarioData.roads.forEach((road) => {
+          const from = getNode(road.from);
+          const to = getNode(road.to);
+
+          if (!from || !to) return;
+
+          const blocked = Boolean(road.blocked);
+
+          const line = L.polyline(
+            [
+              [Number(from.latitude), Number(from.longitude)],
+              [Number(to.latitude), Number(to.longitude)],
+            ],
+            {
+              color: blocked ? "#dc2626" : "#94a3b8",
+              weight: blocked ? 5 : 3,
+              opacity: blocked ? 0.9 : 0.65,
+              dashArray: blocked ? "8 8" : null,
+            },
+          ).addTo(disasterMap);
+
+          line.bindPopup(
+            `<strong>${blocked ? "Blocked connection" : "Simulated connection"}</strong><br>` +
+              `${escapeHTML(from.name)} → ${escapeHTML(to.name)}`,
+          );
+
+          roadLayers.push(line);
+        });
+      }
+
+      function renderHubs() {
+        hubMarkers.forEach((marker) => disasterMap.removeLayer(marker));
+        hubMarkers = [];
+
+        scenarioData.hubs.forEach((hub) => {
+          const lat = Number(hub.latitude);
+          const lng = Number(hub.longitude);
+
+          if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+
+          const icon = L.divIcon({
+            className: "",
+            html: '<div class="hub-marker"><i class="fa-solid fa-house-medical"></i></div>',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+          });
+
+          const marker = L.marker([lat, lng], { icon }).addTo(disasterMap);
+
+          marker.bindPopup(
+            `<strong>${escapeHTML(hub.name)}</strong><br>` +
+              `Relief hub<br>Capacity: ${escapeHTML(hub.capacity ?? "Not specified")}`,
+          );
+
+          hubMarkers.push(marker);
+        });
+      }
+
+      function renderLocations() {
+        locationMarkers.forEach((item) => disasterMap.removeLayer(item.marker));
+        locationMarkers = [];
+
+        const visibleLocations = scenarioData.locations.filter((location) => {
+          return (
+            activeFilter === "all" ||
+            String(location.severity).toLowerCase() ===
+              activeFilter.toLowerCase()
+          );
+        });
+
+        visibleLocations.forEach((location) => {
+          const lat = Number(location.latitude);
+          const lng = Number(location.longitude);
+
+          if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+
+          const severity = normalizeSeverity(location.severity);
+          const color = severityColors[severity] || "#64748b";
+
+          const marker = L.circleMarker([lat, lng], {
+            radius: severity === "Critical" ? 11 : 8,
+            color: "#ffffff",
+            weight: 2,
+            fillColor: color,
+            fillOpacity: 0.95,
+          }).addTo(disasterMap);
+
+          marker.bindPopup(
+            `<strong>${escapeHTML(location.name)}</strong><br>` +
+              `Severity: ${escapeHTML(severity)}<br>` +
+              `Affected population: ${formatNumber(location.affectedPopulation ?? 0)}`,
+          );
+
+          marker.on("click", () => selectLocation(location.id));
+
+          locationMarkers.push({ marker, location });
+        });
+
+        renderLocationList(visibleLocations);
+
+        document.getElementById("locationCount").textContent =
+          `${visibleLocations.length} locations`;
+
+        if (
+          selectedLocationId !== null &&
+          !visibleLocations.some(
+            (location) => String(location.id) === String(selectedLocationId),
+          )
+        ) {
+          selectedLocationId = null;
+          document.getElementById("locationDetails").innerHTML =
+            '<h3>Location Details</h3><p class="map-status">Select a location to view its details.</p>';
+        }
+      }
+
+      function renderLocationList(locations) {
+        const container = document.getElementById("locationList");
+
+        if (!locations.length) {
+          container.innerHTML =
+            '<p class="map-status">No locations match this severity filter.</p>';
+          return;
+        }
+
+        container.innerHTML = locations
+          .map((location) => {
+            const severity = normalizeSeverity(location.severity);
+            const selected = String(location.id) === String(selectedLocationId);
+
+            return `
+                <button type="button"
+                    class="location-item ${selected ? "selected" : ""}"
+                    data-location-id="${escapeHTML(location.id)}">
+
+                    <div class="location-item-top">
+                        <span class="location-name">${escapeHTML(location.name)}</span>
+                        <span class="severity-badge severity-${severity.toLowerCase()}">
+                            ${escapeHTML(severity)}
+                        </span>
+                    </div>
+
+                    <div class="location-meta">
+                        <i class="fa-solid fa-users"></i>
+                        ${formatNumber(location.affectedPopulation ?? 0)} people affected
+                        <br>
+                        <i class="fa-solid fa-truck-medical"></i>
+                        ${escapeHTML(location.primaryNeed || "Needs assessment")}
+                    </div>
+                </button>
+            `;
+          })
+          .join("");
+
+        container.querySelectorAll("[data-location-id]").forEach((button) => {
+          button.addEventListener("click", () => {
+            selectLocation(button.dataset.locationId);
+          });
+        });
+      }
+
+      function selectLocation(locationId) {
+        const location = scenarioData.locations.find(
+          (item) => String(item.id) === String(locationId),
+        );
+
+        if (!location) return;
+
+        selectedLocationId = location.id;
+
+        renderLocationList(
+          scenarioData.locations.filter(
+            (item) =>
+              activeFilter === "all" ||
+              String(item.severity).toLowerCase() ===
+                activeFilter.toLowerCase(),
+          ),
+        );
+
+        const severity = normalizeSeverity(location.severity);
+
+        document.getElementById("locationDetails").innerHTML = `
+            <h3>${escapeHTML(location.name)}</h3>
+
+            <div class="detail-row">
+                <span>Severity</span>
+                <span>${escapeHTML(severity)}</span>
+            </div>
+
+            <div class="detail-row">
+                <span>Affected population</span>
+                <span>${formatNumber(location.affectedPopulation ?? 0)}</span>
+            </div>
+
+            <div class="detail-row">
+                <span>Urgency</span>
+                <span>${escapeHTML(location.urgency ?? "Not specified")}</span>
+            </div>
+
+            <div class="detail-row">
+                <span>Primary need</span>
+                <span>${escapeHTML(location.primaryNeed ?? "Not specified")}</span>
+            </div>
+
+            <div class="detail-row">
+                <span>Coordinates</span>
+                <span>${Number(location.latitude).toFixed(4)}, ${Number(location.longitude).toFixed(4)}</span>
+            </div>
+        `;
+
+        disasterMap.setView(
+          [Number(location.latitude), Number(location.longitude)],
+          13,
+          { animate: true },
+        );
+
+        const markerItem = locationMarkers.find(
+          (item) => String(item.location.id) === String(location.id),
+        );
+
+        if (markerItem) markerItem.marker.openPopup();
+      }
+
+      function setupFilters() {
+        document.querySelectorAll("[data-filter]").forEach((button) => {
+          button.addEventListener("click", () => {
+            activeFilter = button.dataset.filter;
+
+            document.querySelectorAll("[data-filter]").forEach((item) => {
+              item.classList.toggle("active", item === button);
+            });
+
+            renderLocations();
+
+            document.getElementById("mapStatus").textContent =
+              `Showing ${activeFilter === "all" ? "all" : activeFilter} severity locations · Simulated data`;
+          });
+        });
+      }
+
+      function fitMapToScenario() {
+        const points = [];
+
+        scenarioData.locations.concat(scenarioData.hubs).forEach((item) => {
+          const lat = Number(item.latitude);
+          const lng = Number(item.longitude);
+
+          if (Number.isFinite(lat) && Number.isFinite(lng)) {
+            points.push([lat, lng]);
+          }
+        });
+
+        if (points.length) {
+          disasterMap.fitBounds(points, { padding: [35, 35], maxZoom: 12 });
+        }
+      }
+
+      function normalizeSeverity(value) {
+        // Scenario JSON numeric severity: 1 to 5
+        const numericSeverity = Number(value);
+
+        if (Number.isFinite(numericSeverity) && String(value).trim() !== "") {
+          if (numericSeverity >= 5) return "Critical";
+          if (numericSeverity >= 4) return "High";
+          if (numericSeverity >= 3) return "Medium";
+          return "Low";
+        }
+
+        // Also support text-based severity values
+        const severity = String(value || "")
+          .trim()
+          .toLowerCase();
+
+        if (severity === "critical") return "Critical";
+        if (severity === "high") return "High";
+        if (severity === "medium") return "Medium";
+        if (severity === "low") return "Low";
+
+        return "Medium";
+      }
+
+      function formatNumber(value) {
+        const number = Number(value);
+
+        return Number.isFinite(number)
+          ? new Intl.NumberFormat("en-IN").format(number)
+          : "0";
+      }
+
+      function escapeHTML(value) {
+        return String(value ?? "").replace(
+          /[&<>"']/g,
+          (character) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[character],
+        );
+      }
+    </script>
+  </body>
+</html>

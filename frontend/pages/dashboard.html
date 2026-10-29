@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="AvertIQ intelligent operations dashboard for monitoring incidents, priority locations, resources and operational status."
+    >
+
+    <meta name="theme-color" content="#0f172a">
+
+    <title>Dashboard | AvertIQ</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Leaflet Map -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <!-- AvertIQ Stylesheets -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body class="dashboard-page">
+
+    <!-- Mobile Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- =========================================
+         SIDEBAR
+    ========================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-brand">
+
+            <a href="dashboard.html" class="brand-link">
+
+                <div class="brand-logo">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+
+                <div class="brand-details">
+                    <span class="brand-name">AvertIQ</span>
+                    <span class="brand-subtitle">INTELLIGENCE PLATFORM</span>
+                </div>
+
+            </a>
+
+            <button
+                type="button"
+                class="sidebar-close"
+                id="sidebarClose"
+                aria-label="Close sidebar"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <!-- Workspace -->
+        <div class="workspace-selector">
+
+            <div class="workspace-icon">
+                <i class="fa-solid fa-building-shield"></i>
+            </div>
+
+            <div class="workspace-info">
+                <span>Workspace</span>
+                <strong>Operations Center</strong>
+            </div>
+
+            <i class="fa-solid fa-chevron-down workspace-chevron"></i>
+
+        </div>
+
+
+        <!-- Navigation -->
+        <div class="sidebar-label">WORKSPACE</div>
+
+        <nav class="sidebar-nav">
+          <a href="../pages/dashboard.html" class="nav-link active">
+            <i class="fa-solid fa-border-all"></i>
+            <span>Command Center</span>
+          </a>
+
+          <a href="./disaster-map.html" class="nav-link ">
+            <i class="fa-solid fa-map-location-dot"></i>
+            <span>Disaster Map</span>
+          </a>
+
+          <a href="./resource-allocation.html" class="nav-link">
+            <i class="fa-solid fa-boxes-stacked"></i>
+            <span>Resource Allocation</span>
+          </a>
+
+          <a href="./rescue-operations.html" class="nav-link">
+            <i class="fa-solid fa-truck-medical"></i>
+            <span>Rescue Operations</span>
+          </a>
+
+          <a href="./analytics.html" class="nav-link">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Analytics</span>
+          </a>
+
+          <a href="./simulation.html" class="nav-link">
+            <i class="fa-solid fa-flask"></i>
+            <span>Simulation Lab</span>
+          </a>
+
+          <a href="./settings.html" class="nav-link">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Simulation Environment</span>
+        </div>
+      </aside>
+
+
+    <!-- =========================================
+         MAIN WRAPPER
+    ========================================== -->
+
+    <div class="main-wrapper">
+
+
+        <!-- Header -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button
+                    type="button"
+                    class="menu-toggle"
+                    id="menuToggle"
+                    aria-label="Open navigation"
+                    aria-expanded="false"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="page-heading">
+                    <div class="breadcrumb">
+                        <span>AvertIQ</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                        <span>Dashboard</span>
+                    </div>
+
+                    <h1>Operations Dashboard</h1>
+
+                    <p>
+                        Monitor operational activity and critical updates.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="live-indicator">
+                    <span class="status-dot"></span>
+                    <span>Monitoring</span>
+                </div>
+
+                <button
+                    type="button"
+                    class="topbar-icon-button"
+                    id="refreshDashboard"
+                    aria-label="Refresh dashboard"
+                    title="Refresh dashboard"
+                >
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+
+                <button
+                    type="button"
+                    class="topbar-icon-button"
+                    aria-label="Notifications"
+                    id="notificationButton"
+                >
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+
+                <div class="topbar-profile">
+
+                    <div class="profile-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <div class="profile-details">
+                        <strong id="dashboardUserName">Administrator</strong>
+                        <span id="dashboardUserRole">Operations Team</span>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-down"></i>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =========================================
+             DASHBOARD CONTENT
+        ========================================== -->
+
+        <main class="dashboard-content avertiq-dashboard-content">
+
+
+            <!-- Welcome Section -->
+            <section class="dashboard-welcome">
+
+                <div class="welcome-content">
+
+                    <span class="welcome-label">
+                        <i class="fa-solid fa-bolt"></i>
+                        INTELLIGENCE AT A GLANCE
+                    </span>
+
+                    <h2>
+                        Welcome to your command center.
+                    </h2>
+
+                    <p>
+                        Review operational conditions, identify critical
+                        situations and monitor available resources.
+                    </p>
+
+                    <div class="welcome-actions">
+
+                        <a
+                            href="../pages/dashboard.html#map-section"
+                            class="btn-primary"
+                        >
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            Open Live Map
+                        </a>
+
+                        <button
+                            type="button"
+                            class="btn-secondary"
+                            id="welcomeRefreshButton"
+                        >
+                            <i class="fa-solid fa-rotate-right"></i>
+                            Refresh Data
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="welcome-visual" aria-hidden="true">
+                    <div class="visual-ring visual-ring-one"></div>
+                    <div class="visual-ring visual-ring-two"></div>
+
+                    <div class="visual-center">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- =====================================
+                 KPI CARDS
+            ====================================== -->
+
+            <section class="dashboard-section" id="overview-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Operational Overview</h2>
+                        <p>Key indicators from your monitoring system.</p>
+                    </div>
+
+                    <span class="section-period">
+                        <i class="fa-regular fa-clock"></i>
+                        Current Overview
+                    </span>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+
+                    <!-- Total Incidents -->
+                    <article class="stat-card">
+
+                        <div class="stat-card-header">
+
+                            <div class="stat-icon stat-icon-blue">
+                                <i class="fa-solid fa-layer-group"></i>
+                            </div>
+
+                            <span class="stat-category">INCIDENTS</span>
+
+                        </div>
+
+                        <div class="stat-card-body">
+                            <h3 id="totalIncidents">--</h3>
+                            <p>Total Recorded Incidents</p>
+                        </div>
+
+                        <a
+                            href="../pages/dashboard.html#incidents-section"
+                            class="stat-card-footer"
+                        >
+                            View incidents
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                    </article>
+
+
+                    <!-- Active Incidents -->
+                    <article class="stat-card">
+
+                        <div class="stat-card-header">
+
+                            <div class="stat-icon stat-icon-red">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+
+                            <span class="stat-category">PRIORITY</span>
+
+                        </div>
+
+                        <div class="stat-card-body">
+                            <h3 id="activeIncidents">--</h3>
+                            <p>Active Incidents</p>
+                        </div>
+
+                        <a
+                            href="../pages/dashboard.html#incidents-section"
+                            class="stat-card-footer"
+                        >
+                            Review incidents
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                    </article>
+
+
+                    <!-- Priority Locations -->
+                    <article class="stat-card">
+
+                        <div class="stat-card-header">
+
+                            <div class="stat-icon stat-icon-purple">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+
+                            <span class="stat-category">LOCATIONS</span>
+
+                        </div>
+
+                        <div class="stat-card-body">
+                            <h3 id="priorityLocations">--</h3>
+                            <p>Priority Locations</p>
+                        </div>
+
+                        <a
+                            href="../pages/dashboard.html#locations-section"
+                            class="stat-card-footer"
+                        >
+                            Explore locations
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                    </article>
+
+
+                    <!-- Available Resources -->
+                    <article class="stat-card">
+
+                        <div class="stat-card-header">
+
+                            <div class="stat-icon stat-icon-green">
+                                <i class="fa-solid fa-truck-medical"></i>
+                            </div>
+
+                            <span class="stat-category">RESOURCES</span>
+
+                        </div>
+
+                        <div class="stat-card-body">
+                            <h3 id="availableResources">--</h3>
+                            <p>Available Resources</p>
+                        </div>
+
+                        <a
+                            href="../pages/dashboard.html#resources-section"
+                            class="stat-card-footer"
+                        >
+                            View resources
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                    </article>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================
+                 MAP AND INCIDENTS
+            ====================================== -->
+
+            <div class="dashboard-primary-grid">
+
+
+                <!-- Live Map -->
+                <section
+                    class="content-card map-card"
+                    id="map-section"
+                >
+
+                    <div class="content-card-header">
+
+                        <div>
+                            <h2>Live Monitoring Map</h2>
+                            <p>Geographic overview of monitored locations.</p>
+                        </div>
+
+                        <span class="map-live-badge">
+                            <span class="status-dot"></span>
+                            Map View
+                        </span>
+
+                    </div>
+
+
+                    <div class="map-toolbar">
+
+                        <div class="map-legend">
+
+                            <span>
+                                <i class="legend-dot legend-critical"></i>
+                                Critical
+                            </span>
+
+                            <span>
+                                <i class="legend-dot legend-warning"></i>
+                                Warning
+                            </span>
+
+                            <span>
+                                <i class="legend-dot legend-normal"></i>
+                                Normal
+                            </span>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="map-control-button"
+                            id="mapResetButton"
+                        >
+                            <i class="fa-solid fa-crosshairs"></i>
+                            Reset View
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="dashboardMap"
+                        class="dashboard-map"
+                        role="application"
+                        aria-label="Interactive monitoring map"
+                    ></div>
+
+
+                    <div class="map-footer">
+                        <span>
+                            <i class="fa-solid fa-circle-info"></i>
+                            Map markers depend on available location data.
+                        </span>
+                    </div>
+
+                </section>
+
+
+                <!-- Priority Incidents -->
+                <section
+                    class="content-card incidents-card"
+                    id="incidents-section"
+                >
+
+                    <div class="content-card-header">
+
+                        <div>
+                            <h2>Priority Incidents</h2>
+                            <p>Incidents requiring attention.</p>
+                        </div>
+
+                        <a
+                            href="../pages/dashboard.html#incidents-section"
+                            class="view-all-link"
+                        >
+                            View All
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+
+                    <div
+                        class="incident-list"
+                        id="priorityIncidentList"
+                    >
+
+                        <div class="loading-state">
+                            <i class="fa-solid fa-spinner fa-spin"></i>
+                            <span>Loading incident data...</span>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="empty-state"
+                        id="incidentEmptyState"
+                        hidden
+                    >
+
+                        <i class="fa-regular fa-circle-check"></i>
+
+                        <h3>No incidents to display</h3>
+
+                        <p>
+                            There are no incident records available.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+
+            <!-- =====================================
+                 LOCATIONS AND ANALYTICS
+            ====================================== -->
+
+            <div class="dashboard-secondary-grid">
+
+
+                <!-- Priority Locations -->
+                <section
+                    class="content-card locations-card"
+                    id="locations-section"
+                >
+
+                    <div class="content-card-header">
+
+                        <div>
+                            <h2>Priority Locations</h2>
+                            <p>Locations ranked by operational priority.</p>
+                        </div>
+
+                        <a
+                            href="../pages/dashboard.html#locations-section"
+                            class="view-all-link"
+                        >
+                            View All
+                        </a>
+
+                    </div>
+
+
+                    <div
+                        class="priority-location-list"
+                        id="priorityLocationList"
+                    >
+
+                        <div class="loading-state">
+                            <i class="fa-solid fa-spinner fa-spin"></i>
+                            <span>Loading locations...</span>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="empty-state"
+                        id="locationsEmptyState"
+                        hidden
+                    >
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        <h3>No locations available</h3>
+
+                        <p>
+                            Location records will appear here when available.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Resource Analytics -->
+                <section
+                    class="content-card analytics-card"
+                    id="analytics-section"
+                >
+
+                    <div class="content-card-header">
+
+                        <div>
+                            <h2>Resource Overview</h2>
+                            <p>Summary of resource distribution.</p>
+                        </div>
+
+                        <span class="chart-label">
+                            Resource Status
+                        </span>
+
+                    </div>
+
+
+                    <div class="resource-chart-container">
+
+                        <canvas
+                            id="resourceChart"
+                            aria-label="Resource distribution chart"
+                            role="img"
+                        ></canvas>
+
+                    </div>
+
+
+                    <div
+                        class="resource-summary"
+                        id="resourceSummary"
+                    >
+
+                        <div class="loading-state">
+                            <i class="fa-solid fa-spinner fa-spin"></i>
+                            <span>Loading resource information...</span>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+
+            <!-- =====================================
+                 OPERATIONS STATUS
+            ====================================== -->
+
+            <section
+                class="content-card operations-card"
+                id="operations-section"
+            >
+
+                <div class="content-card-header">
+
+                    <div>
+                        <h2>Operations Status</h2>
+                        <p>Current status of available system services.</p>
+                    </div>
+
+                    <span class="operations-status-label">
+                        System Overview
+                    </span>
+
+                </div>
+
+
+                <div class="operations-grid">
+
+
+                    <article class="operation-item">
+
+                        <div class="operation-icon">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+
+                        <div class="operation-details">
+                            <h3>Data Service</h3>
+                            <p>Data connectivity</p>
+                        </div>
+
+                        <span
+                            class="operation-status"
+                            id="dataServiceStatus"
+                        >
+                            Checking
+                        </span>
+
+                    </article>
+
+
+                    <article class="operation-item">
+
+                        <div class="operation-icon">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+
+                        <div class="operation-details">
+                            <h3>Location Service</h3>
+                            <p>Geographic information</p>
+                        </div>
+
+                        <span
+                            class="operation-status"
+                            id="locationServiceStatus"
+                        >
+                            Checking
+                        </span>
+
+                    </article>
+
+
+                    <article class="operation-item">
+
+                        <div class="operation-icon">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+
+                        <div class="operation-details">
+                            <h3>Analytics Service</h3>
+                            <p>Dashboard analytics</p>
+                        </div>
+
+                        <span
+                            class="operation-status"
+                            id="analyticsServiceStatus"
+                        >
+                            Checking
+                        </span>
+
+                    </article>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================
+                 RECOMMENDATIONS
+            ====================================== -->
+
+            <section
+                class="content-card recommendations-card"
+                id="recommendations-section"
+            >
+
+                <div class="content-card-header">
+
+                    <div>
+                        <h2>Recommendations</h2>
+                        <p>Suggested actions based on available information.</p>
+                    </div>
+
+                    <i class="fa-solid fa-lightbulb recommendation-heading-icon"></i>
+
+                </div>
+
+
+                <div
+                    class="recommendation-list"
+                    id="recommendationList"
+                >
+
+                    <div class="loading-state">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        <span>Loading recommendations...</span>
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="empty-state"
+                    id="recommendationsEmptyState"
+                    hidden
+                >
+
+                    <i class="fa-regular fa-lightbulb"></i>
+
+                    <h3>No recommendations available</h3>
+
+                    <p>
+                        Recommendations will appear when sufficient data is available.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================
+                 RECENT ACTIVITY
+            ====================================== -->
+
+            <section
+                class="content-card activity-card"
+                id="activity-section"
+            >
+
+                <div class="content-card-header">
+
+                    <div>
+                        <h2>Recent Activity</h2>
+                        <p>Latest recorded operational updates.</p>
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="activity-list"
+                    id="recentActivityList"
+                >
+
+                    <div class="loading-state">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        <span>Loading recent activity...</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================================
+                 FOOTER
+            ====================================== -->
+
+            <footer class="dashboard-footer">
+
+                <div class="footer-brand">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <strong>AvertIQ</strong>
+                </div>
+
+                <p>
+                    &copy; <span id="currentYear"></span>
+                    AvertIQ. All rights reserved.
+                </p>
+
+                <div class="footer-links">
+                    <a href="../pages/dashboard.html">Home</a>
+                    <a href="../pages/dashboard.html#settings-section">Settings</a>
+                </div>
+
+            </footer>
+
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <!-- Existing application services -->
+    <script src="../js/api.js"></script>
+    <script src="../js/utils.js"></script>
+
+    <!-- Dashboard functionality -->
+    <script src="../js/dashboard.js"></script>
+
+    <script>
+        "use strict";
+
+        /*
+         * Basic dashboard navigation.
+         * Detailed dashboard data remains the responsibility
+         * of the existing dashboard.js file.
+         */
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("sidebarOverlay");
+            const menuToggle = document.getElementById("menuToggle");
+            const sidebarClose = document.getElementById("sidebarClose");
+
+            const currentYear = document.getElementById("currentYear");
+
+            if (currentYear) {
+                currentYear.textContent = new Date().getFullYear();
+            }
+
+            function openSidebar() {
+                if (sidebar) {
+                    sidebar.classList.add("active");
+                }
+
+                if (overlay) {
+                    overlay.classList.add("active");
+                }
+
+                if (menuToggle) {
+                    menuToggle.setAttribute("aria-expanded", "true");
+                }
+
+                document.body.classList.add("sidebar-open");
+            }
+
+            function closeSidebar() {
+                if (sidebar) {
+                    sidebar.classList.remove("active");
+                }
+
+                if (overlay) {
+                    overlay.classList.remove("active");
+                }
+
+                if (menuToggle) {
+                    menuToggle.setAttribute("aria-expanded", "false");
+                }
+
+                document.body.classList.remove("sidebar-open");
+            }
+
+            if (menuToggle) {
+                menuToggle.addEventListener("click", openSidebar);
+            }
+
+            if (sidebarClose) {
+                sidebarClose.addEventListener("click", closeSidebar);
+            }
+
+            if (overlay) {
+                overlay.addEventListener("click", closeSidebar);
+            }
+
+            document.querySelectorAll(".sidebar-link").forEach(function (link) {
+                link.addEventListener("click", function () {
+                    if (window.innerWidth <= 992) {
+                        closeSidebar();
+                    }
+                });
+            });
+
+            document.addEventListener("keydown", function (event) {
+                if (event.key === "Escape") {
+                    closeSidebar();
+                }
+            });
+
+            window.addEventListener("resize", function () {
+                if (window.innerWidth > 992) {
+                    closeSidebar();
+                }
+            });
+
+            const refreshButton = document.getElementById("refreshDashboard");
+            const welcomeRefreshButton = document.getElementById("welcomeRefreshButton");
+
+            function refreshDashboardData() {
+                /*
+                 * Trigger the existing dashboard refresh function
+                 * when dashboard.js exposes one.
+                 */
+                if (typeof window.refreshDashboard === "function") {
+                    window.refreshDashboard();
+                } else if (typeof window.loadDashboard === "function") {
+                    window.loadDashboard();
+                } else {
+                    window.location.reload();
+                }
+            }
+
+            if (refreshButton) {
+                refreshButton.addEventListener("click", refreshDashboardData);
+            }
+
+            if (welcomeRefreshButton) {
+                welcomeRefreshButton.addEventListener("click", refreshDashboardData);
+            }
+
+            const resetMapButton = document.getElementById("mapResetButton");
+
+            if (resetMapButton) {
+                resetMapButton.addEventListener("click", function () {
+                    if (window.dashboardMap &&
+                        typeof window.dashboardMap.setView === "function") {
+                        window.dashboardMap.setView([20.5937, 78.9629], 5);
+                    } else if (window.dashboardMap &&
+                        typeof window.dashboardMap.invalidateSize === "function") {
+                        window.dashboardMap.invalidateSize();
+                    }
+                });
+            }
+
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,912 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Simulation Lab | AVERTIQ</title>
+
+    <meta name="description"
+          content="Explore simulated disaster scenarios, blocked roads, resource shortages and alternative response strategies with AVERTIQ.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/simulation.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <a href="../pages/dashboard.html" class="brand">
+            <span class="brand-icon">
+                <i class="fa-solid fa-shield-heart"></i>
+            </span>
+
+            <span class="brand-text">
+                <strong>AVERTIQ</strong>
+                <small>Emergency Intelligence</small>
+            </span>
+        </a>
+
+        <div class="sidebar-label">COMMAND CENTER</div>
+
+        <nav class="sidebar-nav" aria-label="Main navigation">
+
+            <a href="../pages/dashboard.html" class="nav-link">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Command Center</span>
+            </a>
+
+            <a href="disaster-map.html" class="nav-link">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>Disaster Map</span>
+            </a>
+
+            <a href="resource-allocation.html" class="nav-link">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <span>Resource Allocation</span>
+            </a>
+
+            <a href="rescue-operations.html" class="nav-link">
+                <i class="fa-solid fa-truck-medical"></i>
+                <span>Rescue Operations</span>
+            </a>
+
+            <a href="analytics.html" class="nav-link">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+
+            <a href="simulation.html" class="nav-link active"
+               aria-current="page">
+                <i class="fa-solid fa-flask"></i>
+                <span>Simulation Lab</span>
+            </a>
+
+            <a href="settings.html" class="nav-link">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-status">
+                <span class="status-dot"></span>
+
+                <div>
+                    <strong>Demo Environment</strong>
+                    <small>Simulated data only</small>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                AVERTIQ <span>Â·</span> Prototype
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button class="menu-toggle"
+                        id="menuToggle"
+                        type="button"
+                        aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="breadcrumb">
+                    <span>Operations</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <strong>Simulation Lab</strong>
+                </div>
+
+            </div>
+
+            <div class="topbar-right">
+
+                <span class="environment-badge">
+                    <span class="status-dot"></span>
+                    SIMULATION
+                </span>
+
+                <button class="icon-button"
+                        id="resetSimulation"
+                        type="button"
+                        title="Reset simulation"
+                        aria-label="Reset simulation">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </button>
+
+                <div class="profile-chip">
+                    <div class="profile-avatar">AQ</div>
+
+                    <div class="profile-info">
+                        <strong>Operations Desk</strong>
+                        <small>Command Centre</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- SIMULATION PAGE -->
+        <section class="simulation-page">
+
+            <!-- HEADING -->
+            <div class="simulation-heading">
+
+                <div>
+                    <div class="eyebrow">
+                        <i class="fa-solid fa-flask"></i>
+                        WHAT-IF ANALYSIS
+                    </div>
+
+                    <h1>Simulation Lab</h1>
+
+                    <p>
+                        Test alternative disaster scenarios and evaluate
+                        how road closures and resource changes may affect
+                        simulated rescue operations.
+                    </p>
+                </div>
+
+                <div class="simulation-heading-badge">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    Sandbox Mode
+                </div>
+
+            </div>
+
+
+            <!-- DISCLAIMER -->
+            <div class="simulation-notice">
+
+                <div class="simulation-notice-icon">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+
+                <div>
+                    <strong>Isolated Simulation Environment</strong>
+
+                    <p>
+                        Changes made here are for demonstration. They should
+                        not be treated as real emergency instructions.
+                        This prototype uses simulated data and does not
+                        dispatch actual rescue teams or emergency resources.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- STATUS -->
+            <div id="simulationMessage"
+                 class="simulation-message info"
+                 role="status"
+                 aria-live="polite">
+                Loading simulation scenario...
+            </div>
+
+
+            <!-- SUMMARY CARDS -->
+            <div class="simulation-kpi-grid">
+
+                <article class="simulation-kpi-card">
+
+                    <div class="simulation-kpi-top">
+                        <span>Scenario Locations</span>
+
+                        <span class="simulation-kpi-icon blue">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </span>
+                    </div>
+
+                    <div class="simulation-kpi-value"
+                         id="simulationLocationCount">
+                        --
+                    </div>
+
+                    <p>Affected locations in the loaded scenario</p>
+
+                </article>
+
+
+                <article class="simulation-kpi-card">
+
+                    <div class="simulation-kpi-top">
+                        <span>Blocked Roads</span>
+
+                        <span class="simulation-kpi-icon red">
+                            <i class="fa-solid fa-road-barrier"></i>
+                        </span>
+                    </div>
+
+                    <div class="simulation-kpi-value"
+                         id="simulationBlockedRoadCount">
+                        --
+                    </div>
+
+                    <p>Road closures in the current simulation</p>
+
+                </article>
+
+
+                <article class="simulation-kpi-card">
+
+                    <div class="simulation-kpi-top">
+                        <span>Relief Hubs</span>
+
+                        <span class="simulation-kpi-icon green">
+                            <i class="fa-solid fa-warehouse"></i>
+                        </span>
+                    </div>
+
+                    <div class="simulation-kpi-value"
+                         id="simulationHubCount">
+                        --
+                    </div>
+
+                    <p>Available simulated distribution hubs</p>
+
+                </article>
+
+
+                <article class="simulation-kpi-card">
+
+                    <div class="simulation-kpi-top">
+                        <span>Simulation Runs</span>
+
+                        <span class="simulation-kpi-icon purple">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                        </span>
+                    </div>
+
+                    <div class="simulation-kpi-value"
+                         id="simulationRunCount">
+                        0
+                    </div>
+
+                    <p>Recalculations in this browser session</p>
+
+                </article>
+
+            </div>
+
+
+            <!-- WORKSPACE -->
+            <div class="simulation-workspace">
+
+                <!-- LEFT: SCENARIO CONTROLS -->
+                <section class="simulation-panel simulation-controls-panel">
+
+                    <div class="simulation-panel-heading">
+
+                        <div>
+                            <h2>Scenario Controls</h2>
+
+                            <p>
+                                Configure your what-if experiment
+                            </p>
+                        </div>
+
+                        <span class="simulation-panel-icon">
+                            <i class="fa-solid fa-sliders"></i>
+                        </span>
+
+                    </div>
+
+
+                    <!-- SCENARIO SELECTOR -->
+                    <div class="simulation-form-group">
+
+                        <label for="scenarioPreset">
+                            Scenario Preset
+                        </label>
+
+                        <select id="scenarioPreset"
+                                class="simulation-input">
+
+                            <option value="current">
+                                Current Monsoon Flood Scenario
+                            </option>
+
+                            <option value="roadClosure">
+                                Multiple Road Closure Test
+                            </option>
+
+                            <option value="resourceShortage">
+                                Resource Shortage Test
+                            </option>
+
+                            <option value="highDemand">
+                                High Demand Test
+                            </option>
+
+                        </select>
+
+                        <small>
+                            Presets modify the local simulation state only.
+                        </small>
+
+                    </div>
+
+
+                    <!-- ROAD CONTROLS -->
+                    <div class="simulation-section-divider"></div>
+
+                    <div class="simulation-control-section">
+
+                        <div class="simulation-control-title">
+                            <span class="simulation-control-icon red">
+                                <i class="fa-solid fa-road-barrier"></i>
+                            </span>
+
+                            <div>
+                                <h3>Road Network</h3>
+                                <p>Simulate blocked or reopened roads</p>
+                            </div>
+                        </div>
+
+                        <div class="simulation-form-group">
+
+                            <label for="simulationRoadSelect">
+                                Select Road
+                            </label>
+
+                            <select id="simulationRoadSelect"
+                                    class="simulation-input">
+
+                                <option value="">
+                                    Loading roads...
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="simulation-button-row">
+
+                            <button class="simulation-button danger"
+                                    id="blockRoadButton"
+                                    type="button">
+                                <i class="fa-solid fa-ban"></i>
+                                Block Road
+                            </button>
+
+                            <button class="simulation-button success"
+                                    id="unblockRoadButton"
+                                    type="button">
+                                <i class="fa-solid fa-road"></i>
+                                Reopen Road
+                            </button>
+
+                        </div>
+
+                        <div id="simulationRoadStatus"
+                             class="simulation-inline-status">
+                            Select a road to view its status.
+                        </div>
+
+                    </div>
+
+
+                    <!-- RESOURCE CONTROLS -->
+                    <div class="simulation-section-divider"></div>
+
+                    <div class="simulation-control-section">
+
+                        <div class="simulation-control-title">
+                            <span class="simulation-control-icon green">
+                                <i class="fa-solid fa-boxes-stacked"></i>
+                            </span>
+
+                            <div>
+                                <h3>Resource Adjustment</h3>
+                                <p>Change a hub's simulated stock</p>
+                            </div>
+                        </div>
+
+
+                        <div class="simulation-form-group">
+
+                            <label for="simulationHubSelect">
+                                Relief Hub
+                            </label>
+
+                            <select id="simulationHubSelect"
+                                    class="simulation-input">
+
+                                <option value="">
+                                    Loading hubs...
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="simulation-form-group">
+
+                            <label for="simulationResourceSelect">
+                                Resource Type
+                            </label>
+
+                            <select id="simulationResourceSelect"
+                                    class="simulation-input">
+
+                                <option value="">
+                                    Select a resource
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="simulation-form-group">
+
+                            <label for="simulationResourceAmount">
+                                Stock Adjustment
+                            </label>
+
+                            <input type="number"
+                                   id="simulationResourceAmount"
+                                   class="simulation-input"
+                                   value="0"
+                                   min="-10000"
+                                   max="10000"
+                                   step="1">
+
+                            <small>
+                                Positive values add stock. Negative values
+                                reduce stock. Final inventory cannot be negative.
+                            </small>
+
+                        </div>
+
+
+                        <button class="simulation-button primary full-width"
+                                id="applyResourceAdjustment"
+                                type="button">
+
+                            <i class="fa-solid fa-box-open"></i>
+                            Apply Resource Change
+
+                        </button>
+
+                        <div id="simulationResourceStatus"
+                             class="simulation-inline-status">
+                            No resource changes applied.
+                        </div>
+
+                    </div>
+
+
+                    <!-- SIMULATION ACTIONS -->
+                    <div class="simulation-section-divider"></div>
+
+                    <div class="simulation-action-buttons">
+
+                        <button class="simulation-button primary full-width"
+                                id="runSimulation"
+                                type="button">
+
+                            <i class="fa-solid fa-play"></i>
+                            Run Simulation
+
+                        </button>
+
+                        <button class="simulation-button secondary full-width"
+                                id="resetSimulationWorkspace"
+                                type="button">
+
+                            <i class="fa-solid fa-arrow-rotate-left"></i>
+                            Reset Changes
+
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+                <!-- RIGHT: CURRENT SCENARIO -->
+                <section class="simulation-panel simulation-overview-panel">
+
+                    <div class="simulation-panel-heading">
+
+                        <div>
+                            <h2>Scenario Overview</h2>
+
+                            <p>
+                                Current state of the simulated environment
+                            </p>
+                        </div>
+
+                        <span class="simulation-panel-icon">
+                            <i class="fa-solid fa-chart-network"></i>
+                        </span>
+
+                    </div>
+
+
+                    <!-- SCENARIO INFO -->
+                    <div class="simulation-scenario-info">
+
+                        <div>
+                            <span class="simulation-info-label">
+                                Scenario
+                            </span>
+
+                            <strong id="simulationScenarioName">
+                                Loading...
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span class="simulation-info-label">
+                                Region
+                            </span>
+
+                            <strong id="simulationScenarioRegion">
+                                --
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span class="simulation-info-label">
+                                Mode
+                            </span>
+
+                            <strong class="simulation-mode-label">
+                                <span class="simulation-live-dot"></span>
+                                SIMULATED
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <!-- ROAD STATUS TABLE -->
+                    <div class="simulation-subheading">
+
+                        <h3>Road Network Status</h3>
+
+                        <span id="simulationRoadCountLabel">
+                            0 roads
+                        </span>
+
+                    </div>
+
+                    <div class="simulation-table-wrapper">
+
+                        <table class="simulation-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Road</th>
+                                    <th>Connection</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="simulationRoadTableBody">
+
+                                <tr>
+                                    <td colspan="3"
+                                        class="simulation-table-loading">
+                                        Loading road network...
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- RESOURCE STOCK TABLE -->
+                    <div class="simulation-subheading resource-subheading">
+
+                        <h3>Current Resource Inventory</h3>
+
+                        <span>By hub</span>
+
+                    </div>
+
+                    <div class="simulation-table-wrapper">
+
+                        <table class="simulation-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Hub</th>
+                                    <th>Resource</th>
+                                    <th>Stock</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="simulationInventoryTableBody">
+
+                                <tr>
+                                    <td colspan="3"
+                                        class="simulation-table-loading">
+                                        Loading inventory...
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- RESULTS -->
+            <section class="simulation-panel simulation-results-panel">
+
+                <div class="simulation-panel-heading">
+
+                    <div>
+                        <h2>Simulation Results</h2>
+
+                        <p>
+                            Compare baseline conditions with the current
+                            what-if scenario.
+                        </p>
+                    </div>
+
+                    <span class="simulation-panel-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </span>
+
+                </div>
+
+
+                <div id="simulationResultsPlaceholder"
+                     class="simulation-results-placeholder">
+
+                    <div class="simulation-results-placeholder-icon">
+                        <i class="fa-solid fa-flask"></i>
+                    </div>
+
+                    <h3>Ready to run a simulation</h3>
+
+                    <p>
+                        Change a road or resource quantity, then select
+                        <strong>Run Simulation</strong> to calculate
+                        the updated results.
+                    </p>
+
+                </div>
+
+
+                <div id="simulationResults"
+                     class="simulation-results"
+                     hidden>
+
+                    <!-- RESULT KPIs -->
+                    <div class="simulation-result-kpi-grid">
+
+                        <article class="simulation-result-card">
+
+                            <span>Reachable Locations</span>
+
+                            <strong id="resultReachableLocations">
+                                --
+                            </strong>
+
+                            <small>
+                                Locations reachable from a relief hub
+                            </small>
+
+                        </article>
+
+
+                        <article class="simulation-result-card">
+
+                            <span>Unreachable Locations</span>
+
+                            <strong id="resultUnreachableLocations">
+                                --
+                            </strong>
+
+                            <small>
+                                No available route in this model
+                            </small>
+
+                        </article>
+
+
+                        <article class="simulation-result-card">
+
+                            <span>Available Resource Units</span>
+
+                            <strong id="resultAvailableResources">
+                                --
+                            </strong>
+
+                            <small>
+                                Sum of simulated inventory quantities
+                            </small>
+
+                        </article>
+
+
+                        <article class="simulation-result-card">
+
+                            <span>Resource Shortages</span>
+
+                            <strong id="resultResourceShortages">
+                                --
+                            </strong>
+
+                            <small>
+                                Resource categories with unmet demand
+                            </small>
+
+                        </article>
+
+                    </div>
+
+
+                    <!-- RESULT SUMMARY -->
+                    <div class="simulation-result-summary">
+
+                        <div class="simulation-result-summary-icon">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+
+                        <div>
+                            <h3>Simulation Findings</h3>
+
+                            <div id="simulationResultFindings">
+                                Results will appear here.
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- RESULT TABLE -->
+                    <div class="simulation-subheading">
+
+                        <h3>Location Accessibility</h3>
+
+                        <span>Calculated route status</span>
+
+                    </div>
+
+                    <div class="simulation-table-wrapper">
+
+                        <table class="simulation-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Location</th>
+                                    <th>Priority Score</th>
+                                    <th>Route Status</th>
+                                    <th>Nearest Hub</th>
+                                    <th>Estimated Distance</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="simulationAccessibilityBody">
+
+                                <tr>
+                                    <td colspan="5"
+                                        class="simulation-table-loading">
+                                        Waiting for simulation...
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ACTIVITY LOG -->
+            <section class="simulation-panel simulation-log-panel">
+
+                <div class="simulation-panel-heading">
+
+                    <div>
+                        <h2>Simulation Activity</h2>
+
+                        <p>
+                            Changes made during this browser session
+                        </p>
+                    </div>
+
+                    <span class="simulation-panel-icon">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </span>
+
+                </div>
+
+                <div id="simulationActivityLog"
+                     class="simulation-activity-log"
+                     aria-live="polite">
+
+                    <div class="simulation-log-empty">
+                        <i class="fa-regular fa-clock"></i>
+
+                        <span>
+                            No simulation activity yet.
+                        </span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="simulation-footer">
+
+                <span>
+                    <i class="fa-solid fa-shield-halved"></i>
+                    AVERTIQ Emergency Intelligence
+                </span>
+
+                <span>
+                    Experimental sandbox Â· Simulated data only
+                </span>
+
+            </footer>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- APPLICATION SCRIPTS -->
+<script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/allocation.js"></script>
+<script src="../js/simulation.js"></script>
+
+</body>
+</html>
+
+

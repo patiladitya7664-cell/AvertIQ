@@ -1,0 +1,431 @@
+{
+  "scenario": {
+    "id": "AVERTIQ-FLOOD-001",
+    "name": "Monsoon Flood Emergency",
+    "disasterType": "Flood",
+    "region": "Demo District, Maharashtra, India",
+    "status": "SIMULATION",
+    "isSimulated": true,
+    "description": "Illustrative flood-response scenario created for testing rescue routing and resource allocation.",
+    "lastUpdated": "2026-10-22T08:00:00.000Z"
+  },
+  "map": {
+    "center": {
+      "latitude": 21.1458,
+      "longitude": 79.0882
+    },
+    "zoom": 11
+  },
+  "resourceTypes": [
+    {
+      "id": "food",
+      "name": "Food Kits",
+      "unit": "kits",
+      "icon": "fa-utensils"
+    },
+    {
+      "id": "water",
+      "name": "Drinking Water",
+      "unit": "litres",
+      "icon": "fa-droplet"
+    },
+    {
+      "id": "medical",
+      "name": "Medical Kits",
+      "unit": "kits",
+      "icon": "fa-kit-medical"
+    },
+    {
+      "id": "rescue",
+      "name": "Rescue Boats",
+      "unit": "boats",
+      "icon": "fa-life-ring"
+    },
+    {
+      "id": "shelter",
+      "name": "Shelter Units",
+      "unit": "units",
+      "icon": "fa-house"
+    }
+  ],
+  "hubs": [
+    {
+      "id": "HUB-01",
+      "name": "Central Relief Hub",
+      "latitude": 21.155,
+      "longitude": 79.075,
+      "capacity": 500,
+      "availableTeams": 4,
+      "resources": {
+        "food": 450,
+        "water": 2400,
+        "medical": 120,
+        "rescue": 5,
+        "shelter": 180
+      },
+      "status": "active"
+    },
+    {
+      "id": "HUB-02",
+      "name": "North Rescue Hub",
+      "latitude": 21.19,
+      "longitude": 79.095,
+      "capacity": 300,
+      "availableTeams": 3,
+      "resources": {
+        "food": 260,
+        "water": 1600,
+        "medical": 75,
+        "rescue": 3,
+        "shelter": 110
+      },
+      "status": "active"
+    },
+    {
+      "id": "HUB-03",
+      "name": "South Relief Hub",
+      "latitude": 21.105,
+      "longitude": 79.105,
+      "capacity": 250,
+      "availableTeams": 2,
+      "resources": {
+        "food": 190,
+        "water": 1100,
+        "medical": 50,
+        "rescue": 2,
+        "shelter": 80
+      },
+      "status": "active"
+    },
+    {
+      "id": "HUB-04",
+      "name": "West Emergency Hub",
+      "latitude": 21.14,
+      "longitude": 79.025,
+      "capacity": 200,
+      "availableTeams": 2,
+      "resources": {
+        "food": 150,
+        "water": 900,
+        "medical": 40,
+        "rescue": 2,
+        "shelter": 60
+      },
+      "status": "active"
+    }
+  ],
+  "locations": [
+    {
+      "id": "LOC-001",
+      "name": "Riverside Settlement",
+      "latitude": 21.174,
+      "longitude": 79.081,
+      "severity": 5,
+      "urgency": 5,
+      "affectedPopulation": 1250,
+      "vulnerablePopulation": 390,
+      "requiredResources": {
+        "food": 150,
+        "water": 900,
+        "medical": 35,
+        "rescue": 2,
+        "shelter": 80
+      },
+      "status": "unserved"
+    },
+    {
+      "id": "LOC-002",
+      "name": "Old Town District",
+      "latitude": 21.151,
+      "longitude": 79.105,
+      "severity": 4,
+      "urgency": 5,
+      "affectedPopulation": 920,
+      "vulnerablePopulation": 280,
+      "requiredResources": {
+        "food": 110,
+        "water": 700,
+        "medical": 25,
+        "rescue": 1,
+        "shelter": 55
+      },
+      "status": "unserved"
+    },
+    {
+      "id": "LOC-003",
+      "name": "East Market Area",
+      "latitude": 21.143,
+      "longitude": 79.133,
+      "severity": 3,
+      "urgency": 4,
+      "affectedPopulation": 680,
+      "vulnerablePopulation": 160,
+      "requiredResources": {
+        "food": 80,
+        "water": 480,
+        "medical": 18,
+        "rescue": 1,
+        "shelter": 35
+      },
+      "status": "unserved"
+    },
+    {
+      "id": "LOC-004",
+      "name": "Hillview Colony",
+      "latitude": 21.208,
+      "longitude": 79.12,
+      "severity": 4,
+      "urgency": 4,
+      "affectedPopulation": 740,
+      "vulnerablePopulation": 240,
+      "requiredResources": {
+        "food": 90,
+        "water": 560,
+        "medical": 22,
+        "rescue": 1,
+        "shelter": 45
+      },
+      "status": "unserved"
+    },
+    {
+      "id": "LOC-005",
+      "name": "Southbank Village",
+      "latitude": 21.087,
+      "longitude": 79.083,
+      "severity": 5,
+      "urgency": 5,
+      "affectedPopulation": 1480,
+      "vulnerablePopulation": 460,
+      "requiredResources": {
+        "food": 180,
+        "water": 1100,
+        "medical": 45,
+        "rescue": 3,
+        "shelter": 100
+      },
+      "status": "unserved"
+    },
+    {
+      "id": "LOC-006",
+      "name": "Industrial Zone",
+      "latitude": 21.126,
+      "longitude": 79.055,
+      "severity": 3,
+      "urgency": 3,
+      "affectedPopulation": 510,
+      "vulnerablePopulation": 100,
+      "requiredResources": {
+        "food": 60,
+        "water": 350,
+        "medical": 12,
+        "rescue": 1,
+        "shelter": 25
+      },
+      "status": "unserved"
+    },
+    {
+      "id": "LOC-007",
+      "name": "Greenfield Community",
+      "latitude": 21.17,
+      "longitude": 79.15,
+      "severity": 2,
+      "urgency": 3,
+      "affectedPopulation": 380,
+      "vulnerablePopulation": 90,
+      "requiredResources": {
+        "food": 45,
+        "water": 280,
+        "medical": 10,
+        "rescue": 0,
+        "shelter": 18
+      },
+      "status": "unserved"
+    },
+    {
+      "id": "LOC-008",
+      "name": "Central Bus Terminal",
+      "latitude": 21.133,
+      "longitude": 79.09,
+      "severity": 4,
+      "urgency": 4,
+      "affectedPopulation": 610,
+      "vulnerablePopulation": 190,
+      "requiredResources": {
+        "food": 75,
+        "water": 450,
+        "medical": 24,
+        "rescue": 1,
+        "shelter": 30
+      },
+      "status": "unserved"
+    },
+    {
+      "id": "LOC-009",
+      "name": "Lakeside Hamlet",
+      "latitude": 21.095,
+      "longitude": 79.145,
+      "severity": 5,
+      "urgency": 4,
+      "affectedPopulation": 830,
+      "vulnerablePopulation": 310,
+      "requiredResources": {
+        "food": 100,
+        "water": 650,
+        "medical": 30,
+        "rescue": 2,
+        "shelter": 65
+      },
+      "status": "unserved"
+    },
+    {
+      "id": "LOC-010",
+      "name": "West Garden District",
+      "latitude": 21.16,
+      "longitude": 79.035,
+      "severity": 2,
+      "urgency": 2,
+      "affectedPopulation": 290,
+      "vulnerablePopulation": 65,
+      "requiredResources": {
+        "food": 35,
+        "water": 200,
+        "medical": 8,
+        "rescue": 0,
+        "shelter": 15
+      },
+      "status": "unserved"
+    }
+  ],
+  "roads": [
+    {
+      "id": "ROAD-001",
+      "name": "Riverside Bridge",
+      "from": "HUB-01",
+      "to": "LOC-001",
+      "distanceKm": 4.2,
+      "blocked": false
+    },
+    {
+      "id": "ROAD-002",
+      "name": "Central Avenue",
+      "from": "HUB-01",
+      "to": "LOC-002",
+      "distanceKm": 2.8,
+      "blocked": false
+    },
+    {
+      "id": "ROAD-003",
+      "name": "Market Road",
+      "from": "HUB-01",
+      "to": "LOC-003",
+      "distanceKm": 5.4,
+      "blocked": true
+    },
+    {
+      "id": "ROAD-004",
+      "name": "North Highway",
+      "from": "HUB-02",
+      "to": "LOC-004",
+      "distanceKm": 3.1,
+      "blocked": false
+    },
+    {
+      "id": "ROAD-005",
+      "name": "Southbank Road",
+      "from": "HUB-03",
+      "to": "LOC-005",
+      "distanceKm": 2.6,
+      "blocked": false
+    },
+    {
+      "id": "ROAD-006",
+      "name": "Factory Link Road",
+      "from": "HUB-04",
+      "to": "LOC-006",
+      "distanceKm": 3.7,
+      "blocked": true
+    },
+    {
+      "id": "ROAD-007",
+      "name": "Greenfield Connector",
+      "from": "HUB-02",
+      "to": "LOC-007",
+      "distanceKm": 4.9,
+      "blocked": false
+    },
+    {
+      "id": "ROAD-008",
+      "name": "Terminal Access Road",
+      "from": "HUB-01",
+      "to": "LOC-008",
+      "distanceKm": 2.2,
+      "blocked": false
+    },
+    {
+      "id": "ROAD-009",
+      "name": "Lakeside Route",
+      "from": "HUB-03",
+      "to": "LOC-009",
+      "distanceKm": 6.1,
+      "blocked": false
+    },
+    {
+      "id": "ROAD-010",
+      "name": "West Garden Road",
+      "from": "HUB-04",
+      "to": "LOC-010",
+      "distanceKm": 2.4,
+      "blocked": false
+    },
+    {
+      "id": "ROAD-011",
+      "name": "North-Central Connector",
+      "from": "HUB-02",
+      "to": "HUB-01",
+      "distanceKm": 5.2,
+      "blocked": false
+    },
+    {
+      "id": "ROAD-012",
+      "name": "South-Central Connector",
+      "from": "HUB-03",
+      "to": "HUB-01",
+      "distanceKm": 6.5,
+      "blocked": false
+    },
+    {
+      "id": "ROAD-013",
+      "name": "West-Central Connector",
+      "from": "HUB-04",
+      "to": "HUB-01",
+      "distanceKm": 4.6,
+      "blocked": false
+    },
+    {
+      "id": "ROAD-014",
+      "name": "East Market Connector",
+      "from": "LOC-003",
+      "to": "LOC-007",
+      "distanceKm": 3.3,
+      "blocked": false
+    },
+    {
+      "id": "ROAD-015",
+      "name": "Riverside-Southbank Connector",
+      "from": "LOC-001",
+      "to": "LOC-005",
+      "distanceKm": 7.1,
+      "blocked": true
+    }
+  ],
+  "simulationSettings": {
+    "priorityWeights": {
+      "severity": 0.35,
+      "urgency": 0.25,
+      "affectedPopulation": 0.2,
+      "vulnerablePopulation": 0.2
+    },
+    "maxSimulationIterations": 10,
+    "defaultRoadSpeedKmh": 30
+  }
+}

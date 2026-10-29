@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | AVERTIQ</title>
+
+    <meta name="description"
+          content="Manage AVERTIQ disaster response dashboard preferences and simulation settings.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/settings.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+
+            <div>
+                <h2>AVERTIQ</h2>
+                <span>Emergency Command</span>
+            </div>
+        </div>
+
+        <div class="sidebar-section-label">WORKSPACE</div>
+
+        <nav class="sidebar-nav">
+            <a href="../pages/dashboard.html" class="nav-link">
+                <i class="fa-solid fa-gauge-high"></i>
+                <span>Command Center</span>
+            </a>
+
+            <a href="disaster-map.html" class="nav-link">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>Disaster Map</span>
+            </a>
+
+            <a href="resource-allocation.html" class="nav-link">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <span>Resource Allocation</span>
+            </a>
+
+            <a href="rescue-operations.html" class="nav-link">
+                <i class="fa-solid fa-truck-medical"></i>
+                <span>Rescue Operations</span>
+            </a>
+
+            <a href="analytics.html" class="nav-link">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+
+            <a href="simulation.html" class="nav-link">
+                <i class="fa-solid fa-flask"></i>
+                <span>Simulation Lab</span>
+            </a>
+
+            <a href="settings.html" class="nav-link active"
+               aria-current="page">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="system-status-dot"></div>
+            <span>Simulation Environment</span>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn"
+                        id="mobileMenuButton"
+                        aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div>
+                    <h1>Settings</h1>
+                    <p>Configure your AVERTIQ workspace preferences.</p>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <span class="demo-badge">
+                    <i class="fa-solid fa-flask"></i>
+                    DEMO MODE
+                </span>
+            </div>
+        </header>
+
+        <section class="settings-page">
+
+            <div class="settings-notice">
+                <i class="fa-solid fa-circle-info"></i>
+                <div>
+                    <strong>Prototype configuration</strong>
+                    <p>
+                        These settings control preferences saved in this
+                        browser. They do not configure live emergency systems.
+                    </p>
+                </div>
+            </div>
+
+            <form id="settingsForm">
+
+                <!-- GENERAL SETTINGS -->
+                <section class="settings-card">
+                    <div class="settings-card-heading">
+                        <div class="settings-heading-icon">
+                            <i class="fa-solid fa-sliders"></i>
+                        </div>
+
+                        <div>
+                            <h2>General Preferences</h2>
+                            <p>Customize the basic dashboard experience.</p>
+                        </div>
+                    </div>
+
+                    <div class="settings-field">
+                        <label for="operatorName">Operator Display Name</label>
+                        <input type="text"
+                               id="operatorName"
+                               name="operatorName"
+                               maxlength="60"
+                               placeholder="Enter operator name">
+                        <small>This name is stored only in this browser.</small>
+                    </div>
+
+                    <div class="settings-field">
+                        <label for="displayDensity">Dashboard Density</label>
+                        <select id="displayDensity" name="displayDensity">
+                            <option value="comfortable">Comfortable</option>
+                            <option value="compact">Compact</option>
+                        </select>
+                    </div>
+
+                    <div class="settings-field">
+                        <label for="refreshInterval">
+                            Preferred Refresh Interval
+                        </label>
+
+                        <select id="refreshInterval" name="refreshInterval">
+                            <option value="manual">Manual refresh</option>
+                            <option value="30">30 seconds</option>
+                            <option value="60">1 minute</option>
+                            <option value="300">5 minutes</option>
+                        </select>
+
+                        <small>
+                            This preference does not enable automatic
+                            server-side or live-data refresh.
+                        </small>
+                    </div>
+                </section>
+
+                <!-- MAP SETTINGS -->
+                <section class="settings-card">
+                    <div class="settings-card-heading">
+                        <div class="settings-heading-icon">
+                            <i class="fa-solid fa-map"></i>
+                        </div>
+
+                        <div>
+                            <h2>Map Preferences</h2>
+                            <p>Choose how map information should appear.</p>
+                        </div>
+                    </div>
+
+                    <div class="settings-field">
+                        <label for="defaultMapView">Default Map View</label>
+                        <select id="defaultMapView" name="defaultMapView">
+                            <option value="standard">Standard Map</option>
+                            <option value="satellite">Satellite Preference</option>
+                        </select>
+
+                        <small>
+                            The selected preference is saved locally.
+                            Satellite tiles require compatible map-layer
+                            support on the map page.
+                        </small>
+                    </div>
+
+                    <label class="settings-toggle-row">
+                        <span>
+                            <strong>Show Location Labels</strong>
+                            <small>
+                                Preference for displaying affected-location
+                                labels.
+                            </small>
+                        </span>
+
+                        <input type="checkbox"
+                               id="showLocationLabels"
+                               name="showLocationLabels">
+                    </label>
+
+                    <label class="settings-toggle-row">
+                        <span>
+                            <strong>Show Blocked Road Indicators</strong>
+                            <small>
+                                Preference for highlighting blocked roads.
+                            </small>
+                        </span>
+
+                        <input type="checkbox"
+                               id="showBlockedRoads"
+                               name="showBlockedRoads">
+                    </label>
+                </section>
+
+                <!-- SEVERITY SETTINGS -->
+                <section class="settings-card">
+                    <div class="settings-card-heading">
+                        <div class="settings-heading-icon severity-icon">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+
+                        <div>
+                            <h2>Disaster Display</h2>
+                            <p>Configure severity display preferences.</p>
+                        </div>
+                    </div>
+
+                    <div class="settings-field">
+                        <label for="severityDisplay">Severity Display</label>
+                        <select id="severityDisplay" name="severityDisplay">
+                            <option value="all">Show All Severity Levels</option>
+                            <option value="critical">Prioritize Critical</option>
+                            <option value="high">Prioritize High and Critical</option>
+                        </select>
+
+                        <small>
+                            This preference is stored locally. Other pages
+                            must read it before changing their displays.
+                        </small>
+                    </div>
+
+                    <label class="settings-toggle-row">
+                        <span>
+                            <strong>Show Priority Scores</strong>
+                            <small>
+                                Display the preference for priority scores
+                                where supported.
+                            </small>
+                        </span>
+
+                        <input type="checkbox"
+                               id="showPriorityScores"
+                               name="showPriorityScores">
+                    </label>
+                </section>
+
+                <!-- NOTIFICATION SETTINGS -->
+                <section class="settings-card">
+                    <div class="settings-card-heading">
+                        <div class="settings-heading-icon notification-icon">
+                            <i class="fa-solid fa-bell"></i>
+                        </div>
+
+                        <div>
+                            <h2>Notification Preferences</h2>
+                            <p>Choose which optional browser notifications to allow.</p>
+                        </div>
+                    </div>
+
+                    <label class="settings-toggle-row">
+                        <span>
+                            <strong>In-App Messages</strong>
+                            <small>
+                                Allow application messages and feedback
+                                where supported.
+                            </small>
+                        </span>
+
+                        <input type="checkbox"
+                               id="inAppNotifications"
+                               name="inAppNotifications">
+                    </label>
+
+                    <label class="settings-toggle-row">
+                        <span>
+                            <strong>Simulation Result Messages</strong>
+                            <small>
+                                Show feedback when a simulation completes,
+                                where supported.
+                            </small>
+                        </span>
+
+                        <input type="checkbox"
+                               id="simulationNotifications"
+                               name="simulationNotifications">
+                    </label>
+                </section>
+
+                <!-- ACTIONS -->
+                <div class="settings-actions">
+                    <button type="button"
+                            class="settings-reset-btn"
+                            id="resetSettings">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        Reset Preferences
+                    </button>
+
+                    <button type="submit"
+                            class="settings-save-btn">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        Save Preferences
+                    </button>
+                </div>
+
+                <p class="settings-feedback"
+                   id="settingsFeedback"
+                   role="status"
+                   aria-live="polite"></p>
+
+            </form>
+
+            <footer class="settings-footer">
+                AVERTIQ · Anticipate Risk. Optimise Rescue.
+                <span>Prototype environment · Simulated data</span>
+            </footer>
+
+        </section>
+    </main>
+</div>
+
+<div class="settings-toast"
+     id="settingsToast"
+     role="status"
+     aria-live="polite"></div>
+
+<script src="../js/main.js"></script>
+<script src="../js/settings.js"></script>
+</body>
+</html>

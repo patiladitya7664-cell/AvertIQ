@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rescue Operations | AVERTIQ</title>
+
+    <meta name="description"
+          content="Monitor simulated rescue team assignments, operational status, and emergency response progress in AVERTIQ.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/rescue.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <a href="../pages/dashboard.html" class="brand">
+            <span class="brand-icon">
+                <i class="fa-solid fa-shield-heart"></i>
+            </span>
+
+            <span class="brand-text">
+                <strong>AVERTIQ</strong>
+                <small>Emergency Intelligence</small>
+            </span>
+        </a>
+
+        <div class="sidebar-label">COMMAND CENTER</div>
+
+        <nav class="sidebar-nav" aria-label="Main navigation">
+
+            <a href="../pages/dashboard.html" class="nav-link">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Command Center</span>
+            </a>
+
+            <a href="disaster-map.html" class="nav-link">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>Disaster Map</span>
+            </a>
+
+            <a href="resource-allocation.html" class="nav-link">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <span>Resource Allocation</span>
+            </a>
+
+            <a href="rescue-operations.html" class="nav-link active"
+               aria-current="page">
+                <i class="fa-solid fa-truck-medical"></i>
+                <span>Rescue Operations</span>
+            </a>
+
+            <a href="analytics.html" class="nav-link">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+
+            <a href="simulation.html" class="nav-link">
+                <i class="fa-solid fa-flask"></i>
+                <span>Simulation Lab</span>
+            </a>
+
+            <a href="settings.html" class="nav-link">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-status">
+                <span class="status-dot"></span>
+
+                <div>
+                    <strong>Demo Environment</strong>
+                    <small>Simulated operations only</small>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                AVERTIQ <span>·</span> Prototype
+            </div>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+                <button class="menu-toggle"
+                        id="menuToggle"
+                        type="button"
+                        aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="breadcrumb">
+                    <span>Operations</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <strong>Rescue Operations</strong>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+
+                <span class="environment-badge">
+                    <span class="status-dot"></span>
+                    SIMULATION
+                </span>
+
+                <button class="icon-button"
+                        id="refreshOperations"
+                        type="button"
+                        aria-label="Refresh rescue operations">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+
+                <div class="profile-chip">
+                    <div class="profile-avatar">AQ</div>
+
+                    <div class="profile-info">
+                        <strong>Operations Desk</strong>
+                        <small>Command Centre</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- PAGE -->
+        <section class="rescue-page">
+
+            <div class="rescue-page-heading">
+
+                <div>
+                    <div class="eyebrow">
+                        <i class="fa-solid fa-tower-broadcast"></i>
+                        FIELD RESPONSE MANAGEMENT
+                    </div>
+
+                    <h1>Rescue Operations</h1>
+
+                    <p>
+                        Monitor simulated rescue teams, assignments,
+                        route accessibility and response progress.
+                    </p>
+                </div>
+
+                <button class="btn btn-primary"
+                        id="refreshTeamData"
+                        type="button">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                    Refresh Operations
+                </button>
+
+            </div>
+
+
+            <!-- DEMO NOTICE -->
+            <div class="rescue-demo-notice">
+                <div class="notice-icon">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+
+                <div>
+                    <strong>Demonstration Environment</strong>
+
+                    <p>
+                        Team names, assignments and operational statuses
+                        are simulated for this prototype. No real rescue
+                        team is being dispatched or tracked.
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- MESSAGE -->
+            <div id="rescueMessage"
+                 class="rescue-message info"
+                 role="status"
+                 aria-live="polite">
+                Loading simulated rescue operations...
+            </div>
+
+
+            <!-- KPI CARDS -->
+            <div class="rescue-kpi-grid">
+
+                <article class="rescue-kpi-card">
+                    <div class="rescue-kpi-top">
+                        <span>Total Teams</span>
+
+                        <span class="rescue-kpi-icon blue">
+                            <i class="fa-solid fa-people-group"></i>
+                        </span>
+                    </div>
+
+                    <div class="rescue-kpi-value" id="totalTeams">
+                        --
+                    </div>
+
+                    <p>Teams in scenario</p>
+                </article>
+
+
+                <article class="rescue-kpi-card">
+                    <div class="rescue-kpi-top">
+                        <span>Available Teams</span>
+
+                        <span class="rescue-kpi-icon green">
+                            <i class="fa-solid fa-user-check"></i>
+                        </span>
+                    </div>
+
+                    <div class="rescue-kpi-value" id="availableTeams">
+                        --
+                    </div>
+
+                    <p>Ready for assignment</p>
+                </article>
+
+
+                <article class="rescue-kpi-card">
+                    <div class="rescue-kpi-top">
+                        <span>Active Operations</span>
+
+                        <span class="rescue-kpi-icon amber">
+                            <i class="fa-solid fa-truck-medical"></i>
+                        </span>
+                    </div>
+
+                    <div class="rescue-kpi-value" id="activeOperations">
+                        --
+                    </div>
+
+                    <p>Currently in progress</p>
+                </article>
+
+
+                <article class="rescue-kpi-card">
+                    <div class="rescue-kpi-top">
+                        <span>Completed</span>
+
+                        <span class="rescue-kpi-icon purple">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </span>
+                    </div>
+
+                    <div class="rescue-kpi-value" id="completedOperations">
+                        --
+                    </div>
+
+                    <p>Completed in simulation</p>
+                </article>
+
+            </div>
+
+
+            <!-- OPERATION OVERVIEW -->
+            <div class="rescue-overview-grid">
+
+                <!-- TEAM STATUS -->
+                <section class="rescue-panel">
+
+                    <div class="rescue-panel-heading">
+
+                        <div>
+                            <h2>Team Readiness</h2>
+
+                            <p>
+                                Current simulated team distribution
+                            </p>
+                        </div>
+
+                        <span class="panel-icon">
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="team-readiness-content">
+
+                        <div class="readiness-ring"
+                             id="readinessRing"
+                             role="img"
+                             aria-label="Team readiness percentage">
+
+                            <div class="readiness-ring-inner">
+                                <strong id="readinessPercentage">0%</strong>
+                                <span>Ready</span>
+                            </div>
+
+                        </div>
+
+                        <div class="readiness-legend">
+
+                            <div class="readiness-legend-item">
+                                <span class="legend-dot available"></span>
+
+                                <div>
+                                    <strong>Available</strong>
+                                    <small id="availableLegend">0 teams</small>
+                                </div>
+                            </div>
+
+                            <div class="readiness-legend-item">
+                                <span class="legend-dot active"></span>
+
+                                <div>
+                                    <strong>Active</strong>
+                                    <small id="activeLegend">0 teams</small>
+                                </div>
+                            </div>
+
+                            <div class="readiness-legend-item">
+                                <span class="legend-dot completed"></span>
+
+                                <div>
+                                    <strong>Completed</strong>
+                                    <small id="completedLegend">0 teams</small>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- RESPONSE SUMMARY -->
+                <section class="rescue-panel">
+
+                    <div class="rescue-panel-heading">
+
+                        <div>
+                            <h2>Response Overview</h2>
+
+                            <p>
+                                Summary of affected locations
+                            </p>
+                        </div>
+
+                        <span class="panel-icon">
+                            <i class="fa-solid fa-house-flood-water"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="response-summary-list">
+
+                        <div class="response-summary-item">
+                            <div class="response-summary-icon red">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+
+                            <div class="response-summary-copy">
+                                <strong>Critical Locations</strong>
+                                <small>Severity level 5</small>
+                            </div>
+
+                            <strong id="criticalResponseLocations">--</strong>
+                        </div>
+
+
+                        <div class="response-summary-item">
+                            <div class="response-summary-icon amber">
+                                <i class="fa-solid fa-route"></i>
+                            </div>
+
+                            <div class="response-summary-copy">
+                                <strong>Blocked Roads</strong>
+                                <small>Unavailable road connections</small>
+                            </div>
+
+                            <strong id="blockedResponseRoads">--</strong>
+                        </div>
+
+
+                        <div class="response-summary-item">
+                            <div class="response-summary-icon blue">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+
+                            <div class="response-summary-copy">
+                                <strong>Total Locations</strong>
+                                <small>In the current scenario</small>
+                            </div>
+
+                            <strong id="totalResponseLocations">--</strong>
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- TEAM DIRECTORY -->
+            <section class="rescue-panel team-directory-panel">
+
+                <div class="rescue-panel-heading team-directory-heading">
+
+                    <div>
+                        <h2>Rescue Team Directory</h2>
+
+                        <p>
+                            Inspect simulated teams and their current assignments.
+                        </p>
+                    </div>
+
+                    <div class="team-directory-controls">
+
+                        <label class="search-control">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+
+                            <input
+                                type="search"
+                                id="teamSearch"
+                                placeholder="Search teams..."
+                                aria-label="Search rescue teams">
+                        </label>
+
+                        <label class="filter-control">
+                            <span class="sr-only">Filter teams by status</span>
+
+                            <select id="teamStatusFilter">
+                                <option value="all">All statuses</option>
+                                <option value="available">Available</option>
+                                <option value="active">Active</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <div class="rescue-table-wrapper">
+
+                    <table class="rescue-table">
+
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Specialisation</th>
+                                <th>Assigned Location</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="rescueTeamsBody">
+
+                            <tr>
+                                <td colspan="6" class="table-loading">
+                                    <i class="fa-solid fa-spinner fa-spin"></i>
+                                    Loading teams...
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div class="table-footer">
+                    <span id="teamResultCount">0 teams</span>
+
+                    <span>
+                        <i class="fa-solid fa-database"></i>
+                        Simulated scenario data
+                    </span>
+                </div>
+
+            </section>
+
+
+            <!-- OPERATION DETAILS -->
+            <section class="rescue-panel operation-details-panel">
+
+                <div class="rescue-panel-heading">
+
+                    <div>
+                        <h2>Operation Details</h2>
+
+                        <p>
+                            Select View Details on a team to inspect its assignment.
+                        </p>
+                    </div>
+
+                    <span class="panel-icon">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </span>
+
+                </div>
+
+
+                <div id="operationDetails" class="operation-details-content">
+
+                    <div class="operation-empty-state">
+                        <div class="operation-empty-icon">
+                            <i class="fa-solid fa-binoculars"></i>
+                        </div>
+
+                        <h3>No team selected</h3>
+
+                        <p>
+                            Choose a team from the directory to view its
+                            simulated assignment and location information.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="rescue-page-footer">
+                <span>
+                    <i class="fa-solid fa-shield-halved"></i>
+                    AVERTIQ Emergency Intelligence
+                </span>
+
+                <span>
+                    Simulation prototype · Decision support only
+                </span>
+            </footer>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- SCRIPTS -->
+<script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/rescue.js"></script>
+
+</body>
+</html>

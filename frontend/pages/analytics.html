@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analytics | AVERTIQ</title>
+
+    <meta name="description"
+          content="Explore simulated disaster impact, resource demand, location severity and response analytics in AVERTIQ.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/analytics.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <a href="dashboard.html" class="brand">
+            <span class="brand-icon">
+                <i class="fa-solid fa-shield-heart"></i>
+            </span>
+
+            <span class="brand-text">
+                <strong>AVERTIQ</strong>
+                <small>Emergency Intelligence</small>
+            </span>
+        </a>
+
+        <div class="sidebar-label">COMMAND CENTER</div>
+
+        <nav class="sidebar-nav" aria-label="Main navigation">
+
+            <a href="../pages/dashboard.html" class="nav-link">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Command Center</span>
+            </a>
+
+            <a href="disaster-map.html" class="nav-link">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span>Disaster Map</span>
+            </a>
+
+            <a href="resource-allocation.html" class="nav-link">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <span>Resource Allocation</span>
+            </a>
+
+            <a href="rescue-operations.html" class="nav-link">
+                <i class="fa-solid fa-truck-medical"></i>
+                <span>Rescue Operations</span>
+            </a>
+
+            <a href="analytics.html" class="nav-link active"
+               aria-current="page">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+
+            <a href="simulation.html" class="nav-link">
+                <i class="fa-solid fa-flask"></i>
+                <span>Simulation Lab</span>
+            </a>
+
+            <a href="settings.html" class="nav-link">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-status">
+                <span class="status-dot"></span>
+
+                <div>
+                    <strong>Demo Environment</strong>
+                    <small>Simulated data only</small>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                AVERTIQ <span>·</span> Prototype
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button class="menu-toggle"
+                        id="menuToggle"
+                        type="button"
+                        aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="breadcrumb">
+                    <span>Intelligence</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <strong>Analytics</strong>
+                </div>
+
+            </div>
+
+            <div class="topbar-right">
+
+                <span class="environment-badge">
+                    <span class="status-dot"></span>
+                    SIMULATION
+                </span>
+
+                <button class="icon-button"
+                        id="refreshAnalytics"
+                        type="button"
+                        aria-label="Refresh analytics">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+
+                <div class="profile-chip">
+                    <div class="profile-avatar">AQ</div>
+
+                    <div class="profile-info">
+                        <strong>Operations Desk</strong>
+                        <small>Command Centre</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ANALYTICS PAGE -->
+        <section class="analytics-page">
+
+            <div class="analytics-heading">
+
+                <div>
+                    <div class="eyebrow">
+                        <i class="fa-solid fa-chart-simple"></i>
+                        DISASTER INTELLIGENCE
+                    </div>
+
+                    <h1>Analytics & Insights</h1>
+
+                    <p>
+                        Understand simulated disaster impact, identify
+                        resource shortages and evaluate operational readiness.
+                    </p>
+                </div>
+
+                <button class="analytics-refresh-button"
+                        id="refreshAnalyticsData"
+                        type="button">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                    Refresh Analysis
+                </button>
+
+            </div>
+
+
+            <!-- SIMULATION NOTICE -->
+            <div class="analytics-notice">
+
+                <div class="analytics-notice-icon">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+
+                <div>
+                    <strong>Illustrative Scenario Analysis</strong>
+
+                    <p>
+                        All charts use the project's simulated disaster
+                        scenario. Values are intended for demonstration
+                        and must not be interpreted as verified field data
+                        or validated emergency forecasts.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+            <div id="analyticsMessage"
+                 class="analytics-message info"
+                 role="status"
+                 aria-live="polite">
+                Loading analytics...
+            </div>
+
+
+            <!-- SUMMARY KPIs -->
+            <div class="analytics-kpi-grid">
+
+                <article class="analytics-kpi-card">
+
+                    <div class="analytics-kpi-top">
+                        <span>Affected Population</span>
+
+                        <span class="analytics-kpi-icon blue">
+                            <i class="fa-solid fa-people-group"></i>
+                        </span>
+                    </div>
+
+                    <div class="analytics-kpi-value"
+                         id="analyticsAffectedPopulation">
+                        --
+                    </div>
+
+                    <p>Combined population across locations</p>
+
+                </article>
+
+
+                <article class="analytics-kpi-card">
+
+                    <div class="analytics-kpi-top">
+                        <span>Vulnerable Population</span>
+
+                        <span class="analytics-kpi-icon red">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </span>
+                    </div>
+
+                    <div class="analytics-kpi-value"
+                         id="analyticsVulnerablePopulation">
+                        --
+                    </div>
+
+                    <p>People requiring additional consideration</p>
+
+                </article>
+
+
+                <article class="analytics-kpi-card">
+
+                    <div class="analytics-kpi-top">
+                        <span>Critical Locations</span>
+
+                        <span class="analytics-kpi-icon amber">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </span>
+                    </div>
+
+                    <div class="analytics-kpi-value"
+                         id="analyticsCriticalLocations">
+                        --
+                    </div>
+
+                    <p>Locations with severity level 5</p>
+
+                </article>
+
+
+                <article class="analytics-kpi-card">
+
+                    <div class="analytics-kpi-top">
+                        <span>Blocked Roads</span>
+
+                        <span class="analytics-kpi-icon purple">
+                            <i class="fa-solid fa-road-barrier"></i>
+                        </span>
+                    </div>
+
+                    <div class="analytics-kpi-value"
+                         id="analyticsBlockedRoads">
+                        --
+                    </div>
+
+                    <p>Roads marked blocked in the scenario</p>
+
+                </article>
+
+            </div>
+
+
+            <!-- CHART ROW 1 -->
+            <div class="analytics-chart-grid">
+
+                <!-- SEVERITY -->
+                <section class="analytics-panel">
+
+                    <div class="analytics-panel-heading">
+
+                        <div>
+                            <h2>Location Severity Distribution</h2>
+
+                            <p>
+                                Number of locations by severity category
+                            </p>
+                        </div>
+
+                        <span class="chart-icon red">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="analytics-chart-container severity-chart">
+                        <canvas id="severityChart"
+                                aria-label="Location severity distribution chart">
+                        </canvas>
+                    </div>
+
+                    <div class="chart-caption">
+                        Severity categories are derived from the scenario's
+                        numeric severity levels.
+                    </div>
+
+                </section>
+
+
+                <!-- POPULATION -->
+                <section class="analytics-panel">
+
+                    <div class="analytics-panel-heading">
+
+                        <div>
+                            <h2>Population by Location</h2>
+
+                            <p>
+                                Compare affected and vulnerable populations
+                            </p>
+                        </div>
+
+                        <span class="chart-icon blue">
+                            <i class="fa-solid fa-chart-column"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="analytics-chart-container population-chart">
+                        <canvas id="populationChart"
+                                aria-label="Affected and vulnerable population chart">
+                        </canvas>
+                    </div>
+
+                    <div class="chart-caption">
+                        Vulnerable population is shown as a subset indicator;
+                        do not add it to affected population.
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- CHART ROW 2 -->
+            <div class="analytics-chart-grid">
+
+                <!-- RESOURCE -->
+                <section class="analytics-panel">
+
+                    <div class="analytics-panel-heading">
+
+                        <div>
+                            <h2>Resource Availability vs Demand</h2>
+
+                            <p>
+                                Total simulated stock compared with requirements
+                            </p>
+                        </div>
+
+                        <span class="chart-icon green">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="analytics-chart-container resource-chart">
+                        <canvas id="resourceDemandChart"
+                                aria-label="Resource availability and demand chart">
+                        </canvas>
+                    </div>
+
+                    <div class="chart-caption">
+                        Each resource category uses its own unit.
+                        Compare availability and demand within each category.
+                    </div>
+
+                </section>
+
+
+                <!-- HUB INVENTORY -->
+                <section class="analytics-panel">
+
+                    <div class="analytics-panel-heading">
+
+                        <div>
+                            <h2>Relief Hub Inventory</h2>
+
+                            <p>
+                                Resource stock distribution across hubs
+                            </p>
+                        </div>
+
+                        <span class="chart-icon purple">
+                            <i class="fa-solid fa-warehouse"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="analytics-chart-container hub-chart">
+                        <canvas id="hubInventoryChart"
+                                aria-label="Relief hub inventory chart">
+                        </canvas>
+                    </div>
+
+                    <div class="chart-caption">
+                        Inventory is displayed separately for each resource type.
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- INSIGHTS -->
+            <section class="analytics-panel analytics-insights-panel">
+
+                <div class="analytics-panel-heading">
+
+                    <div>
+                        <h2>Scenario Insights</h2>
+
+                        <p>
+                            Findings calculated from the currently loaded data
+                        </p>
+                    </div>
+
+                    <span class="chart-icon amber">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </span>
+
+                </div>
+
+                <div id="analyticsInsights"
+                     class="analytics-insights-grid">
+
+                    <div class="analytics-insight-loading">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        Calculating scenario insights...
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- LOCATION ANALYSIS TABLE -->
+            <section class="analytics-panel analytics-location-panel">
+
+                <div class="analytics-panel-heading">
+
+                    <div>
+                        <h2>Location Impact Analysis</h2>
+
+                        <p>
+                            Prioritised overview of affected locations
+                        </p>
+                    </div>
+
+                    <span class="chart-icon blue">
+                        <i class="fa-solid fa-list-check"></i>
+                    </span>
+
+                </div>
+
+
+                <div class="analytics-table-wrapper">
+
+                    <table class="analytics-table">
+
+                        <thead>
+                            <tr>
+                                <th>Location</th>
+                                <th>Severity</th>
+                                <th>Urgency</th>
+                                <th>Affected Population</th>
+                                <th>Vulnerable Population</th>
+                                <th>Priority Score</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="analyticsLocationBody">
+
+                            <tr>
+                                <td colspan="6" class="analytics-table-loading">
+                                    <i class="fa-solid fa-spinner fa-spin"></i>
+                                    Loading location analysis...
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="analytics-footer">
+
+                <span>
+                    <i class="fa-solid fa-shield-halved"></i>
+                    AVERTIQ Emergency Intelligence
+                </span>
+
+                <span>
+                    Simulated data · Decision support prototype
+                </span>
+
+            </footer>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- CHART.JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- APPLICATION SCRIPTS -->
+<script src="../js/utils.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/analytics.js"></script>
+
+</body>
+</html>

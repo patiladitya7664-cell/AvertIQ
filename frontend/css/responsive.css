@@ -1,0 +1,414 @@
+/* =========================================================
+   AVERTIQ — RESPONSIVE DESIGN
+   File: frontend/css/responsive.css
+========================================================= */
+
+/* Large laptops and smaller desktops */
+@media (max-width: 1200px) {
+  .app-shell {
+    grid-template-columns: 225px minmax(0, 1fr);
+  }
+
+  .sidebar {
+    width: 225px;
+  }
+
+  .main-content {
+    min-width: 0;
+    padding: 25px;
+  }
+
+  .page-title {
+    font-size: 25px;
+  }
+
+  .stats-grid {
+    gap: 12px;
+  }
+
+  .panel {
+    min-width: 0;
+  }
+}
+
+/* Tablets */
+@media (max-width: 900px) {
+  .app-shell {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 270px;
+    max-width: 85vw;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 2000;
+    transform: translateX(-105%);
+    transition: transform 0.25s ease;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1999;
+    display: block;
+    background: rgba(10, 20, 35, 0.55);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.25s ease,
+      visibility 0.25s ease;
+  }
+
+  .sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .main-content {
+    width: 100%;
+    min-width: 0;
+    padding: 24px;
+  }
+
+  .mobile-menu-button {
+    display: inline-flex;
+  }
+
+  .topbar {
+    gap: 14px;
+  }
+
+  .topbar-left {
+    min-width: 0;
+  }
+
+  .topbar-right {
+    gap: 10px;
+  }
+
+  .primary-grid,
+  .secondary-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dashboard-map {
+    height: 340px;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 600px) {
+  body {
+    font-size: 13px;
+  }
+
+  .main-content {
+    padding: 17px 13px 25px;
+  }
+
+  .topbar {
+    min-height: 62px;
+    gap: 9px;
+    margin-bottom: 23px;
+  }
+
+  .topbar-left {
+    gap: 9px;
+  }
+
+  .mobile-menu-button {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+  }
+
+  .topbar-title {
+    font-size: 14px;
+  }
+
+  .topbar-subtitle {
+    font-size: 10px;
+  }
+
+  .topbar-right {
+    gap: 7px;
+  }
+
+  .notification-button {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .profile-info,
+  .profile-role {
+    display: none;
+  }
+
+  .profile-avatar {
+    width: 34px;
+    height: 34px;
+  }
+
+  .page-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 19px;
+  }
+
+  .page-title {
+    font-size: 23px;
+    line-height: 1.25;
+  }
+
+  .page-description {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .page-actions {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .page-actions .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .btn {
+    min-height: 38px;
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+
+  .demo-notice {
+    align-items: flex-start;
+    gap: 10px;
+    padding: 13px;
+    margin-bottom: 18px;
+  }
+
+  .demo-notice-icon {
+    margin-top: 2px;
+  }
+
+  .demo-notice-text {
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  .panel {
+    padding: 16px;
+    border-radius: 15px;
+  }
+
+  .panel-header {
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 17px;
+  }
+
+  .panel-title {
+    font-size: 14px;
+  }
+
+  .panel-subtitle {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .panel-action {
+    font-size: 11px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .primary-grid,
+  .secondary-grid {
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+
+  .dashboard-map {
+    height: 285px;
+    min-height: 250px;
+  }
+
+  .chart-container {
+    height: 225px;
+  }
+
+  .operations-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .operation-metric {
+    padding: 11px 5px;
+  }
+
+  .operation-metric-label {
+    overflow-wrap: anywhere;
+  }
+
+  .recommendation-item {
+    gap: 9px;
+    padding: 11px;
+  }
+
+  .recommendation-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .recommendation-description {
+    font-size: 11px;
+  }
+
+  .app-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 10px;
+  }
+
+  .toast-container {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    width: auto;
+  }
+
+  .toast {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+  .main-content {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .page-title {
+    font-size: 21px;
+  }
+
+  .stat-card {
+    padding: 12px;
+  }
+
+  .stat-label {
+    font-size: 9px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+
+  .stat-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .panel {
+    padding: 13px;
+  }
+
+  .operations-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .operation-metric {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    text-align: left;
+  }
+
+  .operation-metric-icon {
+    margin-bottom: 0;
+  }
+
+  .operation-metric-value {
+    margin-bottom: 0;
+  }
+}
+
+/* Landscape mobile screens */
+@media (max-height: 500px) and (max-width: 900px) {
+  .sidebar {
+    overflow-y: auto;
+  }
+
+  .dashboard-map {
+    height: 250px;
+  }
+}
+
+/* Accessibility: reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Touch-friendly controls and iOS form sizing */
+@media (max-width: 600px) {
+  body.sidebar-open {
+    overflow: hidden;
+  }
+
+  .mobile-menu-button,
+  .menu-toggle,
+  .sidebar-close,
+  .notification-button,
+  .topbar-icon-button {
+    min-width: 44px;
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+
+  button,
+  select,
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea {
+    touch-action: manipulation;
+  }
+
+  button {
+    min-height: 44px;
+  }
+
+  select,
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea {
+    min-height: 44px;
+    font-size: 16px;
+  }
+}
